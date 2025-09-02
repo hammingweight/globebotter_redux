@@ -38,6 +38,7 @@ class State(TypedDict):
 
 def retrieve(state: State):
     retrieved_docs = retriever.invoke(state["messages"][-1].content)
+    print(retrieved_docs)
     return {"context": retrieved_docs}
 
 def generate(state: State):
@@ -46,7 +47,7 @@ def generate(state: State):
         {"question": state["messages"][-1].content, "history": state["messages"][:-1], "context": docs_content}
     )
     response = chat_model.invoke(messages)
-    return {"answer": response.content, "messages": AIMessage(response.content)}
+    return {"answer": response.content, "messages": [AIMessage(response.content)]}
 
 graph_builder = StateGraph(State).add_sequence(
     [retrieve, generate]
@@ -60,15 +61,26 @@ config = {"configurable": {"thread_id": "abc123"}}
 input_messages = [HumanMessage("Suggest three sites that I should visit if I spend one day in Rome.")]
 response = graph.invoke({"messages": input_messages}, config=config)
 print(response["answer"])
-print("==================================================================\n\n")
+print("==================================================================\n")
 
 input_messages = [HumanMessage("Can you suggest a fourth site?")]
 response = graph.invoke({"messages": input_messages}, config=config)
 print(response["answer"])
-print("==================================================================\n\n")
+print("==================================================================\n")
+
+input_messages = [HumanMessage("I visited that fourth suggestion before. Can you suggest something else?")]
+response = graph.invoke({"messages": input_messages}, config=config)
+print(response["answer"])
+print("==================================================================\n")
+
+input_messages = [HumanMessage("Why not the Taj Mahal as a fourth site?")]
+response = graph.invoke({"messages": input_messages}, config=config)
+print(response["answer"])
+print("==================================================================\n")
 
 input_messages = [HumanMessage("Can you suggest a restaurant for lunch?")]
 response = graph.invoke({"messages": input_messages}, config=config)
 print(response["answer"])
+
 
 
