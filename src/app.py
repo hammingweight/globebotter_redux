@@ -6,7 +6,7 @@ import streamlit as st
 from globebotter.rag import graph
 
 st.set_page_config(page_title="GlobeBotter", page_icon="🌐")
-st.header('🌐 Welcome to GlobeBotter!')
+st.header("🌐 Welcome to GlobeBotter!")
 
 if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
@@ -19,10 +19,12 @@ for message in st.session_state.chat_history:
 if "user_id" not in st.session_state:
     st.session_state["user_id"] = str(uuid.uuid4())
 
+
 def process_message(message, user_id):
     config = {"configurable": {"thread_id": user_id}}
     response = graph.invoke({"messages": HumanMessage(message)}, config=config)
     return response["messages"][-1].content
+
 
 if user_message := st.chat_input("How can I help you?"):
     with st.chat_message("user"):

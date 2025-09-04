@@ -24,10 +24,12 @@ retriever = DocumentRetriever()
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt),
-        ("placeholder"), "{history}",
+        ("placeholder"),
+        "{history}",
         ("human", "{question}"),
     ]
 )
+
 
 class State(TypedDict):
     question: str
@@ -41,17 +43,21 @@ def retrieve(state: State):
     print(retrieved_docs)
     return {"context": retrieved_docs}
 
+
 def generate(state: State):
     docs_content = "\n\n".join(doc.page_content for doc in state["context"])
     messages = prompt.invoke(
-        {"question": state["messages"][-1].content, "history": state["messages"][:-1], "context": docs_content}
+        {
+            "question": state["messages"][-1].content,
+            "history": state["messages"][:-1],
+            "context": docs_content,
+        }
     )
     response = chat_model.invoke(messages)
     return {"answer": response.content, "messages": [AIMessage(response.content)]}
 
-graph_builder = StateGraph(State).add_sequence(
-    [retrieve, generate]
-)
+
+graph_builder = StateGraph(State).add_sequence([retrieve, generate])
 graph_builder.add_edge(START, "retrieve")
 graph_builder.add_edge("generate", END)
 memory = MemorySaver()

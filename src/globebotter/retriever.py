@@ -8,6 +8,7 @@ from langchain_ollama.embeddings import OllamaEmbeddings
 embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
 vector_db = Chroma(persist_directory="db", embedding_function=embedder)
 
+
 class DocumentRetriever(BaseRetriever):
     documents: List[Document] = []
     k: int = 5
