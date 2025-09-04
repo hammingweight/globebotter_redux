@@ -2,7 +2,7 @@ from typing import Annotated, List
 from typing_extensions import TypedDict
 
 from langchain_core.documents import Document
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import AIMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import add_messages, END, START, StateGraph
@@ -56,31 +56,3 @@ graph_builder.add_edge(START, "retrieve")
 graph_builder.add_edge("generate", END)
 memory = MemorySaver()
 graph = graph_builder.compile(checkpointer=memory)
-config = {"configurable": {"thread_id": "abc123"}}
-
-input_messages = [HumanMessage("Suggest three sites that I should visit if I spend one day in Rome.")]
-response = graph.invoke({"messages": input_messages}, config=config)
-print(response["answer"])
-print("==================================================================\n")
-
-input_messages = [HumanMessage("Can you suggest a fourth site?")]
-response = graph.invoke({"messages": input_messages}, config=config)
-print(response["answer"])
-print("==================================================================\n")
-
-input_messages = [HumanMessage("I visited that fourth suggestion before. Can you suggest something else?")]
-response = graph.invoke({"messages": input_messages}, config=config)
-print(response["answer"])
-print("==================================================================\n")
-
-input_messages = [HumanMessage("Why not the Taj Mahal as a fourth site?")]
-response = graph.invoke({"messages": input_messages}, config=config)
-print(response["answer"])
-print("==================================================================\n")
-
-input_messages = [HumanMessage("Can you suggest a restaurant for lunch?")]
-response = graph.invoke({"messages": input_messages}, config=config)
-print(response["answer"])
-
-
-
