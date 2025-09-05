@@ -11,7 +11,7 @@ if not os.path.exists("italy_travel.pdf"):
 
 loader = PyPDFLoader("./italy_travel.pdf")
 documents = loader.load()
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=200)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=200)
 documents = text_splitter.split_documents(documents)
 
 # 2. Convert to vectors:

@@ -12,7 +12,6 @@ vector_db = Chroma(persist_directory=db_dir, embedding_function=embedder)
 
 
 class DocumentRetriever(BaseRetriever):
-    # documents: List[Document] = []
     k: int = 10
 
     def _get_relevant_documents(self, query, *, run_manager) -> List[Document]:
