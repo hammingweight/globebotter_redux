@@ -23,7 +23,7 @@ if "user_id" not in st.session_state:
 def process_message(message, user_id):
     config = {"configurable": {"thread_id": user_id}}
     response = graph.invoke({"messages": HumanMessage(message)}, config=config)
-    return response["answer"]
+    return response["messages"][-1].content
 
 
 if user_message := st.chat_input("How can I help you?"):
