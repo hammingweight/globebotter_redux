@@ -11,29 +11,7 @@ from .llm import chat_model
 from .retriever import DocumentRetriever
 
 
-system_prompt = (
-    "You are a helpful assistant that helps a user to plan an optimized "
-    "travel itinerary given document snippets."
-    "Some of the snippets may not apply to the user's destination."
-    "If none of the snippets is relevant, mention that there are no relevant "
-    "travel documents, and then answer the question to the best of your ability."
-    "\n\nHere are the destination documents: "
-    "{context}\n\n"
-    # Use the advice on p.78 of "Building LLM Powered Applications":
-    # Repeat instructions at the end.
-    "Remember if none of the context is relevant, ignore the context messages "
-    "and answer to the best of your ability."
-)
-
 retriever = DocumentRetriever()
-prompt = ChatPromptTemplate.from_messages(
-    [
-        ("system", system_prompt),
-        ("placeholder"),
-        "{history}",
-        ("human", "{question}"),
-    ]
-)
 
 
 class State(TypedDict):
@@ -50,6 +28,28 @@ def retrieve(state: State):
 
 
 def generate(state: State):
+    system_prompt = (
+        "You are a helpful assistant that helps a user to plan an optimized "
+        "travel itinerary given document snippets."
+        "Some of the snippets may not apply to the user's destination."
+        "If none of the snippets is relevant, mention that there are no relevant "
+        "travel documents, and then answer the question to the best of your ability."
+        "\n\nHere are the destination documents: "
+        "{context}\n\n"
+        # Use the advice on p.78 of "Building LLM Powered Applications":
+        # Repeat instructions at the end.
+        "Remember if none of the context is relevant, ignore the context messages "
+        "and answer to the best of your ability."
+    )
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", system_prompt),
+            ("placeholder"),
+            "{history}",
+            ("human", "{question}"),
+        ]
+    )
+
     docs_content = "\n\n".join(doc.page_content for doc in state["context"])
     messages = prompt.invoke(
         {
