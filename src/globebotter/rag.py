@@ -28,14 +28,34 @@ def sanity_check(state: State):
         "You are a helpful assistant that helps a user to plan an optimized "
         "travel itinerary. Check that the user's question may be on topic for "
         "travel planning. If the question is on topic reply simply with "
-        "'ON TOPIC', else respond with 'OFF TOPIC' followed by the reason "
-        "that the question is unrelated to travel."
+        "'ON TOPIC', else respond with 'OFF TOPIC:' (in upper case) followed by "
+        "the reason that the question is unrelated to travel."
     )
+
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", system_prompt),
+            ("placeholder", "{history}"),
+            ("human", "{question}"),
+        ]
+    )
+
+    messages = prompt.invoke(
+        {
+            "question": state["messages"][-1].content,
+            "history": state["messages"][:-1],
+        }
+    )
+    response = chat_model.invoke(messages)
+    print(response)
+    import time
+    time.sleep(60)
+    return {}
 
 
 def retrieve(state: State):
     retrieved_docs = retriever.invoke(state["messages"][-1].content)
-    print(retrieved_docs)
+    # print(retrieved_docs)
     return {"context": retrieved_docs}
 
 
@@ -46,7 +66,7 @@ def generate(state: State):
         "Some of the snippets may not apply to the user's destination."
         "If none of the snippets is relevant, mention that there are no relevant "
         "travel documents, and then answer the question to the best of your ability."
-        "\n\nHere are the destination documents: "
+        "\n\nHere are the document snippets: "
         "{context}\n\n"
         # Use the advice on p.78 of "Building LLM Powered Applications":
         # Repeat instructions at the end.
@@ -69,15 +89,18 @@ def generate(state: State):
             "context": docs_content,
         }
     )
+    print(messages)
     response = chat_model.invoke(messages)
     return {"answer": response.content, "messages": [AIMessage(response.content)]}
 
 
 graph_builder = StateGraph(State)
+graph_builder.add_node("sanity_check", sanity_check)
 graph_builder.add_node("retrieve", retrieve)
 graph_builder.add_node("generate", generate)
 
-graph_builder.add_edge(START, "retrieve")
+graph_builder.add_edge(START, "sanity_check")
+graph_builder.add_edge("sanity_check", "retrieve")
 graph_builder.add_edge("retrieve", "generate")
 graph_builder.add_edge("generate", END)
 
