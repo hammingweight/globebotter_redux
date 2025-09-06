@@ -62,8 +62,13 @@ def generate(state: State):
     return {"answer": response.content, "messages": [AIMessage(response.content)]}
 
 
-graph_builder = StateGraph(State).add_sequence([retrieve, generate])
+graph_builder = StateGraph(State)
+graph_builder.add_node("retrieve", retrieve)
+graph_builder.add_node("generate", generate)
+
 graph_builder.add_edge(START, "retrieve")
+graph_builder.add_edge("retrieve", "generate")
 graph_builder.add_edge("generate", END)
+
 memory = MemorySaver()
 graph = graph_builder.compile(checkpointer=memory)
