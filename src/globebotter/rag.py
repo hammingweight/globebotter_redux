@@ -16,9 +16,21 @@ retriever = DocumentRetriever()
 
 class State(TypedDict):
     question: str
+    is_off_topic: bool
+    off_topic_reason: str
     context: List[Document]
     answer: str
     messages: Annotated[list, add_messages]
+
+
+def sanity_check(state: State):
+    system_prompt = (
+        "You are a helpful assistant that helps a user to plan an optimized "
+        "travel itinerary. Check that the user's question may be on topic for "
+        "travel planning. If the question is on topic reply simply with "
+        "'ON TOPIC', else respond with 'OFF TOPIC' followed by the reason "
+        "that the question is unrelated to travel."
+    )
 
 
 def retrieve(state: State):
@@ -44,8 +56,7 @@ def generate(state: State):
     prompt = ChatPromptTemplate.from_messages(
         [
             ("system", system_prompt),
-            ("placeholder"),
-            "{history}",
+            ("placeholder", "{history}"),
             ("human", "{question}"),
         ]
     )
