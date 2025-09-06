@@ -7,7 +7,9 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # 1. Load and chunk documents
 if not os.path.exists("italy_travel.pdf"):
-    raise Exception("The file 'italy_travel.pdf' cannot be found in the current directory")
+    raise Exception(
+        "The file 'italy_travel.pdf' cannot be found in the current directory"
+    )
 
 loader = PyPDFLoader("./italy_travel.pdf")
 documents = loader.load()
