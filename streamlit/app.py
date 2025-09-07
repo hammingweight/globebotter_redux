@@ -3,7 +3,7 @@ import uuid
 from langchain_core.messages import HumanMessage
 import streamlit as st
 
-from globebotter.rag import graph
+from globebotter.rag import chatbot
 
 st.set_page_config(page_title="GlobeBotter", page_icon="🌐")
 st.header("🌐 Welcome to GlobeBotter!")
@@ -22,7 +22,7 @@ if "user_id" not in st.session_state:
 
 def process_message(message, user_id):
     config = {"configurable": {"thread_id": user_id}}
-    response = graph.invoke({"messages": HumanMessage(message)}, config=config)
+    response = chatbot.invoke({"messages": HumanMessage(message)}, config=config)
     return response["messages"][-1].content
 
 

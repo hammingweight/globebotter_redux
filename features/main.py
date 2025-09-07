@@ -2,7 +2,7 @@ from langchain_community.utils.math import cosine_similarity
 from langchain_core.messages import HumanMessage
 from langchain_ollama import OllamaEmbeddings
 
-from globebotter.rag import graph
+from globebotter.rag import chatbot
 
 config = {"configurable": {"thread_id": "abc123"}}
 
@@ -21,7 +21,7 @@ comparisons = [
     "1. Pane e Salame. 2. Tonnarello. 3. Cantina e Cucina",
     "All mimsy were the borogoves",
 ]
-response = graph.invoke({"messages": input_messages}, config=config)
+response = chatbot.invoke({"messages": input_messages}, config=config)
 actual = response["answer"]
 # actual = "foo"
 print("================================================================")
