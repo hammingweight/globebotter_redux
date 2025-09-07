@@ -6,15 +6,18 @@ from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # 1. Load and chunk documents
-if not os.path.exists("italy_travel.pdf"):
+if not os.path.exists("italy_guide.pdf"):
     raise Exception(
-        "The file 'italy_travel.pdf' cannot be found in the current directory"
+        "The file 'italy_guide.pdf' cannot be found in the current directory"
     )
 
-loader = PyPDFLoader("./italy_travel.pdf")
+loader = PyPDFLoader("./italy_guide.pdf")
 documents = loader.load()
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=200)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=200)
 documents = text_splitter.split_documents(documents)
+
+for index, doc in enumerate(documents):
+    print(f"Document #{index}\n{doc}\n===")
 
 # 2. Convert to vectors:
 embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
