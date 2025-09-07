@@ -19,11 +19,11 @@ for doc in doc_strings:
 
 
 class VectorDbRetriever(BaseRetriever):
-    k: int = 5
 
     def _get_relevant_documents(self, query, *, run_manager) -> List[Document]:
         print(query)
-        return vector_db.similarity_search(query=query, k=self.k)
+        #return vector_db.similarity_search(query=query, k=self.k)
+        return vector_db.max_marginal_relevance_search(query=query, k=5, fetch_k=20)
 
 
 _VECTOR_DB_RETRIEVER = VectorDbRetriever()
