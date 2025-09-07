@@ -8,54 +8,20 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import add_messages, END, START, StateGraph
 
 from .llm import chat_model
-from .retriever import DocumentRetriever
-
-
-retriever = DocumentRetriever()
+from .retriever import HYBRID_RETRIEVER
 
 
 class State(TypedDict):
     question: str
-    is_off_topic: bool
-    off_topic_reason: str
     context: List[Document]
     answer: str
     messages: Annotated[list, add_messages]
 
 
-def sanity_check(state: State):
-    system_prompt = (
-        "You are a helpful assistant that helps a user to plan an optimized "
-        "travel itinerary. Check that the user's question may be on topic for "
-        "travel planning. If the question is on topic reply simply with "
-        "'ON TOPIC', else respond with 'OFF TOPIC:' (in upper case) followed by "
-        "the reason that the question is unrelated to travel."
-    )
-
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", system_prompt),
-            ("placeholder", "{history}"),
-            ("human", "{question}"),
-        ]
-    )
-
-    messages = prompt.invoke(
-        {
-            "question": state["messages"][-1].content,
-            "history": state["messages"][:-1],
-        }
-    )
-    response = chat_model.invoke(messages)
-    print(response)
-    import time
-    time.sleep(60)
-    return {}
-
-
 def retrieve(state: State):
-    retrieved_docs = retriever.invoke(state["messages"][-1].content)
-    # print(retrieved_docs)
+    retrieved_docs = HYBRID_RETRIEVER.invoke(state["messages"][-1].content)
+    for doc in retrieved_docs:
+        print(f"{doc}\n=====\n")
     return {"context": retrieved_docs}
 
 
@@ -95,12 +61,10 @@ def generate(state: State):
 
 
 graph_builder = StateGraph(State)
-graph_builder.add_node("sanity_check", sanity_check)
 graph_builder.add_node("retrieve", retrieve)
 graph_builder.add_node("generate", generate)
 
-graph_builder.add_edge(START, "sanity_check")
-graph_builder.add_edge("sanity_check", "retrieve")
+graph_builder.add_edge(START, "retrieve")
 graph_builder.add_edge("retrieve", "generate")
 graph_builder.add_edge("generate", END)
 

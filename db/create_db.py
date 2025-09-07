@@ -13,7 +13,7 @@ if not os.path.exists("italy_guide.pdf"):
 
 loader = PyPDFLoader("./italy_guide.pdf")
 documents = loader.load()
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=200)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 documents = text_splitter.split_documents(documents)
 
 for index, doc in enumerate(documents):
