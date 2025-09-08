@@ -8,27 +8,40 @@ from globebotter.rag import chatbot
 
 use_step_matcher("re")
 
-@given(u'a session with the chatbot')
+
+@given("a session with the chatbot")
 def start_session(context):
     context.chatbot = chatbot
     context.session = str(random.randint(1, 1000000))
 
 
-@when(u'a user asks the chatbot "(?P<query>.*)"')
+@when('a user asks the chatbot "(?P<query>.*)"')
 def ask_chatbot(context, query):
-    response = context.chatbot.invoke({"messages": query}, config = {"configurable": {"thread_id": context.session}})
-    embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
+    response = context.chatbot.invoke(
+        {"messages": query}, config={"configurable": {"thread_id": context.session}}
+    )
     context.response = response["messages"][-1].content
+    embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
     context.response_embedding = embedder.embed_documents([context.response])
 
-@then(u'the response should be similar to "(?P<comparison>.*)"')
+
+@then('the response should be similar to "(?P<comparison>.*)"')
 def check_similar(context, comparison):
     embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
     context.expected_embedding = embedder.embed_documents([comparison])
-    context.response_similarity = cosine_similarity(context.response_embedding, context.expected_embedding)[0][0]
+    context.response_similarity = cosine_similarity(
+        context.response_embedding, context.expected_embedding
+    )[0][0]
     print(context.response_similarity)
 
 
-@then(u'the response should not be similar to')
+@then("the response should not be similar to")
 def check_not_similar(context):
-    print(dir(context.table))
+    embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
+    for row in context.table:
+        c = row["Bad Response"]
+        c_embedding = embedder.embed_documents([c])
+        c_similarity = cosine_similarity(context.response_embedding, c_embedding)[0][0]
+        assert (
+            c_similarity < context.response_similarity
+        ), f"'{context.response} is similar to {c}'. Similarity = {c_similarity}"
