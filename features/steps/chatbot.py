@@ -15,8 +15,14 @@ def start_session(context):
     context.session = str(random.randint(1, 1000000))
 
 
-@when('a user asks the chatbot "(?P<query>.*)"')
+@when('a user asks the chatbot(?P<query>.*)')
 def ask_chatbot(context, query):
+    query = query.strip(" '\"")
+    if query == "":
+        query = context.text.strip(" '\"")
+    
+    assert query != "", "No question asked"
+    print(f"Query: {query}\n\n")
     response = context.chatbot.invoke(
         {"messages": query}, config={"configurable": {"thread_id": context.session}}
     )
