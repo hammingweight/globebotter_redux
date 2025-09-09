@@ -1,7 +1,6 @@
 Feature: Chatbot knowledge
 
-
-  @skip
+  @rome
   Scenario: Test tourist sights knowledge
     Given a session with the chatbot
     When a user asks the chatbot
@@ -16,7 +15,13 @@ Feature: Chatbot knowledge
       | 1. Pane e Salame. 2. Tonnarello 3. Cantina e Cucina | These are restaurants, not sights   |
       | All mimsy were the borogoves                        | Nonsense                            |
 
-  @skip
+    When a user asks the chatbot "Is the Asinelli Tower in Rome?"
+    Then the response should be similar to "No, the Asinelli Tower is in Bologna"
+    And the response should not be similar to
+      | Bad Response                      | Reason      |
+      | Yes                               | 100% wrong  |
+      | No, the Asinelli Tower is in Pisa | Wrong tower |
+
   Scenario: Test geography knowledge
     Given a session with the chatbot
     When a user asks the chatbot
@@ -35,10 +40,11 @@ Feature: Chatbot knowledge
     When a user asks the chatbot
     """ 
     List four typical Florentine main dishes in bullet form.
-    Do not describe the food; just provide a list of names.
+    List only main courses (no starters, no desserts).
+    Do not describe the food; just provide the names of the foods.
     """
     Then the response should be similar to "* Bistecca alla fiorentina  * Ribollita  * Panzanella * Pappa al Pomodoro "
     And the response should not be similar to
       | Bad Response                                                                             | Reason               |
       | * Spaghetti cacio e pepe  * Spaghetti alla carbonara  * Abbachio  * Carciofi alla giudea | Roman food           |
-      | * Donatello  * Leonardo da Vinci  * Dante  * Machiavelli                                 | People from Florence |
+      | * Sfogliatella  * Babà  * Pastiera Napoletana  * Struffoli                               | Neapolitan desserts  |
