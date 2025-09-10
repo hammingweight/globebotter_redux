@@ -4,7 +4,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.documents import Document
 from langchain_ollama import OllamaEmbeddings
 from langchain_chroma import Chroma
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_experimental.text_splitter import SemanticChunker
 
 # 1. Load and chunk documents
 if not os.path.exists("italy_guide.pdf"):
@@ -14,7 +14,8 @@ if not os.path.exists("italy_guide.pdf"):
 
 loader = PyPDFLoader("./italy_guide.pdf")
 documents = loader.load()
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
+text_splitter = SemanticChunker(embeddings=embedder, add_start_index=True)
 documents = text_splitter.split_documents(documents)
 
 cleaned_docs = []
@@ -25,10 +26,6 @@ for index, doc in enumerate(documents):
     cleaned_docs.append(cleaned_doc)
     print(f"Document #{index}\n{cleaned_doc}\n===")
 
-# 2. Convert to vectors:
-embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
-
-# 3. Create and populate vector DB
 db_dir = os.getenv("GB_DB", ".")
 _ = Chroma.from_documents(
     documents=cleaned_docs, embedding=embedder, persist_directory=db_dir
