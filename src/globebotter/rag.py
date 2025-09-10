@@ -27,16 +27,18 @@ def retrieve(state: State):
 
 def generate(state: State):
     system_prompt = (
-        "You are a helpful assistant that helps a user to plan an optimized "
-        "travel itinerary given document snippets."
-        "Some of the snippets may not apply to the user's destination."
+        "You are a helpful assistant that helps a user visiting Italy. You should "
+        "answer questions about travel destinations including towns, tourist sights, "
+        "regional food, hotels, etc. You will be supplied with document snippets to "
+        "help you answer the question. "
+        "Some of the snippets may not apply to the user's question."
         "If none of the snippets is relevant, mention that there are no relevant "
-        "travel documents, and then answer the question to the best of your ability."
+        "snippets, and then answer the question to the best of your ability."
         "\n\nHere are the document snippets: "
         "{context}\n\n"
         # Use the advice on p.78 of "Building LLM Powered Applications":
         # Repeat instructions at the end.
-        "Remember if none of the context is relevant, ignore the context messages "
+        "Remember if none of the snippets is relevant, ignore the snippets "
         "and answer to the best of your ability."
     )
     prompt = ChatPromptTemplate.from_messages(

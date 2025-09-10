@@ -1,6 +1,6 @@
 Feature: Chatbot knowledge
 
-  @rome
+  @sights
   Scenario: Test tourist sights knowledge
     Given a session with the chatbot
     When a user asks the chatbot
@@ -22,6 +22,7 @@ Feature: Chatbot knowledge
       | Yes                               | 100% wrong  |
       | No, the Asinelli Tower is in Pisa | Wrong tower |
 
+  @geography
   Scenario: Test geography knowledge
     Given a session with the chatbot
     When a user asks the chatbot
@@ -35,15 +36,15 @@ Feature: Chatbot knowledge
       | 1. Florence 2. Siena 3. Lucca                        | Only three towns         |
       | Florence, Siena, Lucca, Naples and Viareggio         | Not a bullet list        |
 
+  @food
   Scenario: Test food knowledge
     Given a session with the chatbot
-    When a user asks the chatbot
-    """ 
-    List four typical Florentine main dishes in bullet form.
-    List only main courses (no starters, no desserts).
-    Do not describe the food; just provide the names of the foods.
+    When a user asks the chatbot 
     """
-    Then the response should be similar to "* Bistecca alla fiorentina  * Ribollita  * Panzanella * Pappa al Pomodoro "
+    List four foods that are famous in Sicily.
+    Just list the foods without any additional detail.
+    """
+    Then the response should be similar to "* Arancini  * Caponata  * Pasta alla Norma * Cassata"
     And the response should not be similar to
       | Bad Response                                                                             | Reason               |
       | * Spaghetti cacio e pepe  * Spaghetti alla carbonara  * Abbachio  * Carciofi alla giudea | Roman food           |
