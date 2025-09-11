@@ -5,6 +5,7 @@ from langchain_community.utils.math import cosine_similarity
 from langchain_ollama.embeddings import OllamaEmbeddings
 
 from globebotter.rag import chatbot
+from globebotter.settings import LLM_MODEL
 
 use_step_matcher("re")
 
@@ -20,20 +21,20 @@ def ask_chatbot(context, query):
     query = query.strip(" '\"")
     if query == "":
         query = context.text.strip(" '\"")
-    
+
     assert query != "", "No question asked"
     print(f"Query: {query}\n\n")
     response = context.chatbot.invoke(
         {"messages": query}, config={"configurable": {"thread_id": context.session}}
     )
     context.response = response["messages"][-1].content
-    embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
+    embedder = OllamaEmbeddings(model=LLM_MODEL)
     context.response_embedding = embedder.embed_documents([context.response])
 
 
 @then('the response should be similar to "(?P<comparison>.*)"')
 def check_similar(context, comparison):
-    embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
+    embedder = OllamaEmbeddings(model=LLM_MODEL)
     context.expected_embedding = embedder.embed_documents([comparison])
     context.response_similarity = cosine_similarity(
         context.response_embedding, context.expected_embedding
@@ -44,7 +45,7 @@ def check_similar(context, comparison):
 
 @then("the response should not be similar to")
 def check_not_similar(context):
-    embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
+    embedder = OllamaEmbeddings(model=LLM_MODEL)
     for row in context.table:
         c = row["Bad Response"]
         c_embedding = embedder.embed_documents([c])

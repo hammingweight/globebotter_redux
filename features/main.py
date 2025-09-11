@@ -3,6 +3,7 @@ from langchain_core.messages import HumanMessage
 from langchain_ollama import OllamaEmbeddings
 
 from globebotter.rag import chatbot
+from globebotter.settings import LLM_MODEL
 
 config = {"configurable": {"thread_id": "abc123"}}
 
@@ -28,7 +29,7 @@ print("================================================================")
 print(actual)
 print("================================================================")
 
-embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
+embedder = OllamaEmbeddings(model=LLM_MODEL)
 embedding_actual = embedder.embed_documents([actual])
 embedding_comparisons = embedder.embed_documents(comparisons)
 

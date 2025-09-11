@@ -1,5 +1,6 @@
 from langchain_ollama import ChatOllama
 
-chat_model = ChatOllama(
-    model="mistral:7b-instruct-q4_K_M", num_thread=4, temperature=0.1
-)
+from .settings import LLM_MODEL
+
+
+chat_model = ChatOllama(model=LLM_MODEL, num_thread=4, temperature=0.1)

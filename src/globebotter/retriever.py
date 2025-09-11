@@ -10,7 +10,10 @@ from langchain_core.retrievers import BaseRetriever
 from langchain_ollama import ChatOllama
 from langchain_ollama.embeddings import OllamaEmbeddings
 
-embedder = OllamaEmbeddings(model="mistral:7b-instruct-q4_K_M")
+from .settings import LLM_MODEL
+
+
+embedder = OllamaEmbeddings(model=LLM_MODEL)
 db_dir = os.getenv("VECTOR_DB_PATH", "db")
 vector_db = Chroma(persist_directory=db_dir, embedding_function=embedder)
 
@@ -34,8 +37,8 @@ BM25_RETRIEVER.k = 5
 
 HYBRID_RETRIEVER = EnsembleRetriever(retrievers=[VECTOR_DB_RETRIEVER, BM25_RETRIEVER])
 
-llm = ChatOllama(
-    model="mistral:7b-instruct-q4_K_M", num_thread=4, temperature=0.0
-)
+llm = ChatOllama(model=LLM_MODEL, num_thread=4, temperature=0.0)
 compressor = LLMChainExtractor.from_llm(llm=llm)
-CONTEXTUAL_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(base_compressor=compressor, base_retriever=BM25_RETRIEVER, k=5)
+CONTEXTUAL_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
+    base_compressor=compressor, base_retriever=BM25_RETRIEVER, k=5
+)

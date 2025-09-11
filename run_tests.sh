@@ -1,1 +1,1 @@
-PYTHONPATH=src behave --no-capture --no-capture-stderr --no-color --tags food
+PYTHONPATH=src behave --no-capture --no-capture-stderr --no-color
