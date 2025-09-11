@@ -7,7 +7,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import add_messages, END, START, StateGraph
 
-from .llm import chat_model
+from .llm import chat_model, cleanup_response
 from .retriever import HYBRID_RETRIEVER
 
 
@@ -58,8 +58,9 @@ def generate(state: State):
         }
     )
     print(messages)
-    response = chat_model.invoke(messages)
-    return {"answer": response.content, "messages": [AIMessage(response.content)]}
+    response = chat_model.invoke(messages).content
+    response = cleanup_response(response)
+    return {"answer": response, "messages": [AIMessage(response)]}
 
 
 graph_builder = StateGraph(State)

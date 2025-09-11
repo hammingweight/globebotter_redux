@@ -44,8 +44,8 @@ Feature: Chatbot knowledge
     List four foods that are famous in Sicily.
     Just list the foods without any additional detail.
     """
-    Then the response should be similar to "* Arancini  * Caponata  * Pasta alla Norma * Cassata"
+    Then the response should be similar to "Couscous alla Trapanese, arancine, caponata, pesce spada"
     And the response should not be similar to
-      | Bad Response                                                                             | Reason               |
-      | * Spaghetti cacio e pepe  * Spaghetti alla carbonara  * Abbachio  * Carciofi alla giudea | Roman food           |
-      | * Sfogliatella  * Babà  * Pastiera Napoletana  * Struffoli                               | Neapolitan desserts  |
+      | Bad Response                                                                     | Reason               |
+      | Spaghetti cacio e pepe, Spaghetti alla carbonara, Abbachio, Carciofi alla giudea | Roman food           |
+      | Sfogliatella, Babà, Pastiera Napoletana, Struffoli                               | Neapolitan desserts  |
