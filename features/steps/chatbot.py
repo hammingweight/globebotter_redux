@@ -1,7 +1,7 @@
 import random
 import sys
 
-from behave import use_step_matcher
+from behave import use_step_matcher, given, when, then
 from langchain_community.utils.math import cosine_similarity
 from langchain_ollama.embeddings import OllamaEmbeddings
 
