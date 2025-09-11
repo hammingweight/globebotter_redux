@@ -26,7 +26,6 @@ for doc in doc_strings:
 class VectorDbRetriever(BaseRetriever):
 
     def _get_relevant_documents(self, query, *, run_manager) -> List[Document]:
-        print(query)
         return vector_db.max_marginal_relevance_search(query=query, k=5, fetch_k=20)
 
 

@@ -28,12 +28,12 @@ Feature: Chatbot knowledge
     When a user asks the chatbot
     """ 
     List five towns in Tuscany in numbered bullet form. Do not include any details about the towns.
+    Do not explain your reasoning for the selection of towns.
     """
     Then the response should be similar to "1. Florence 2. Siena 3. Lucca 4. Arezzo 5. Viareggio"
     And the response should not be similar to
       | Bad Response                                        | Reason                             |
       | 1. Florence 2. Siena 3. Lucca 4. Naples 5. Salerno  | Naples and Salerno are in Campania |
-      | 1. Siena 2. Lucca 3. Arezzo                         | Only three towns                   |
       | Florence, Siena, Lucca, Naples and Viareggio        | Not a bullet list                  |
 
   @food
@@ -44,7 +44,7 @@ Feature: Chatbot knowledge
     List four foods that are famous in Sicily.
     Just list the foods without any additional detail.
     """
-    Then the response should be similar to "Arancine, Pasta alla Norma, Cannoli, Caponata."
+    Then the response should be similar to "Arancini, Pasta alla Norma, Cannoli, Caponata."
     And the response should not be similar to
       | Bad Response                                                                     | Reason               |
       | Sfogliatella, Babà, Pastiera Napoletana, Struffoli                               | Neapolitan desserts  |

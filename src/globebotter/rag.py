@@ -20,8 +20,6 @@ class State(TypedDict):
 
 def retrieve(state: State):
     retrieved_docs = HYBRID_RETRIEVER.invoke(state["messages"][-1].content)
-    for doc in retrieved_docs:
-        print(f"{doc}\n=====\n")
     return {"context": retrieved_docs}
 
 
@@ -57,7 +55,6 @@ def generate(state: State):
             "context": docs_content,
         }
     )
-    print(messages)
     response = chat_model.invoke(messages).content
     response = cleanup_response(response)
     return {"answer": response, "messages": [AIMessage(response)]}
