@@ -12,7 +12,6 @@ if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
 
 for message in st.session_state.chat_history:
-    print(f"message: {message}")
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
@@ -30,7 +29,8 @@ if user_message := st.chat_input("How can I help you?"):
     with st.chat_message("user"):
         st.markdown(user_message)
     st.session_state.chat_history.append({"role": "User", "content": user_message})
-    response = process_message(user_message, st.session_state["user_id"])
     with st.chat_message("assistant"):
+        with st.spinner("Thinking..."):
+            response = process_message(user_message, st.session_state["user_id"])
         st.markdown(response)
     st.session_state.chat_history.append({"role": "Assistant", "content": response})
