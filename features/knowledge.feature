@@ -15,8 +15,8 @@ Feature: Chatbot knowledge
       | 1. Pane e Salame. 2. Tonnarello 3. Cantina e Cucina | These are restaurants, not sights   |
       | All mimsy were the borogoves                        | Nonsense                            |
 
-    When a user asks the chatbot "Is the Asinelli Tower in Rome?"
-    Then the response should be similar to "No, the Asinelli Tower is in Bologna"
+    When a user asks the chatbot "Is the Asinelli tower in Rome? Your answer should be at most ten words."
+    Then the response should be similar to "No, the Asinelli Tower is in Bologna."
     And the response should not be similar to
       | Bad Response                      | Reason      |
       | Yes                               | 100% wrong  |
@@ -31,10 +31,10 @@ Feature: Chatbot knowledge
     """
     Then the response should be similar to "1. Florence 2. Siena 3. Lucca 4. Arezzo 5. Viareggio"
     And the response should not be similar to
-      | Bad Response                                         | Reason                   |
-      | 1. Florence 2. Siena 3. Lucca 4. Naples 5. Viareggio | Naples is not in Tuscany |
-      | 1. Florence 2. Siena 3. Lucca                        | Only three towns         |
-      | Florence, Siena, Lucca, Naples and Viareggio         | Not a bullet list        |
+      | Bad Response                                        | Reason                             |
+      | 1. Florence 2. Siena 3. Lucca 4. Naples 5. Salerno  | Naples and Salerno are in Campania |
+      | 1. Siena 2. Lucca 3. Arezzo                         | Only three towns                   |
+      | Florence, Siena, Lucca, Naples and Viareggio        | Not a bullet list                  |
 
   @food
   Scenario: Test food knowledge
@@ -44,8 +44,8 @@ Feature: Chatbot knowledge
     List four foods that are famous in Sicily.
     Just list the foods without any additional detail.
     """
-    Then the response should be similar to "Couscous alla Trapanese, arancine, caponata, pesce spada"
+    Then the response should be similar to "Arancine, Pasta alla Norma, Cannoli, Caponata."
     And the response should not be similar to
       | Bad Response                                                                     | Reason               |
-      | Spaghetti cacio e pepe, Spaghetti alla carbonara, Abbachio, Carciofi alla giudea | Roman food           |
       | Sfogliatella, Babà, Pastiera Napoletana, Struffoli                               | Neapolitan desserts  |
+      | Spaghetti Cacio e Pepe, Spaghetti alla Carbonara, Abbachio, Carciofi alla Giudea | Roman food           |

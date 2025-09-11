@@ -32,14 +32,14 @@ def ask_chatbot(context, query):
     context.response_embedding = embedder.embed_documents([context.response])
 
 
-@then('the response should be similar to "(?P<comparison>.*)"')
-def check_similar(context, comparison):
+@then('the response should be similar to "(?P<expected>.*)"')
+def check_similar(context, expected):
     embedder = OllamaEmbeddings(model=LLM_MODEL)
-    context.expected_embedding = embedder.embed_documents([comparison])
+    context.expected_embedding = embedder.embed_documents([expected])
     context.response_similarity = cosine_similarity(
         context.response_embedding, context.expected_embedding
     )[0][0]
-    print(context.response)
+    print(f"Expected: {expected}, got: {context.response}")
     print(f"Good similarity = {context.response_similarity}")
 
 

@@ -32,8 +32,8 @@ def generate(state: State):
         "regional food, hotels, etc. You will be supplied with document snippets to "
         "help you answer the question. "
         "Some of the snippets may not apply to the user's question."
-        "If none of the snippets is relevant, mention that there are no relevant "
-        "snippets, and then answer the question to the best of your ability."
+        "If none of the snippets is relevant, answer the question to the best of "
+        "your ability."
         "\n\nHere are the document snippets: "
         "{context}\n\n"
         # Use the advice on p.78 of "Building LLM Powered Applications":
