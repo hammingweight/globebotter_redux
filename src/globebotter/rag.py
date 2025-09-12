@@ -43,7 +43,6 @@ def check_relevancy(state: State):
     )
     response = chat_model.invoke(messages).content
     response = cleanup_response(response)
-    print(response)
     if "IRRELEVANT:" in response:
         reason_index = response.index("IRRELEVANT:") + len("IRRELEVANT:")
         reason = response[reason_index:].strip()
