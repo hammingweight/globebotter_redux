@@ -30,7 +30,7 @@ Feature: Chatbot knowledge
     List five towns in Tuscany in numbered bullet form. Do not include any details about the towns.
     Do not explain your reasoning for the selection of towns.
     """
-    Then the response should be similar to "1. Florence 2. Siena 3. Lucca 4. Arezzo 5. Viareggio"
+    Then the response should be similar to "1. Florence 2. Pisa 3. Siena 4. Lucca 5. San Gimignano"
     And the response should not be similar to
       | Bad Response                                        | Reason                             |
       | 1. Florence 2. Siena 3. Lucca 4. Naples 5. Salerno  | Naples and Salerno are in Campania |

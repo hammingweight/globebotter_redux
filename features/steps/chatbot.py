@@ -40,8 +40,8 @@ def check_similar(context, expected):
     context.response_similarity = cosine_similarity(
         context.response_embedding, context.expected_embedding
     )[0][0]
-    print(f"Expected: {expected}, got: {context.response}", file=sys.stderr)
-    print(f"Good similarity = {context.response_similarity}", file=sys.stderr)
+    print(f"Expected: {expected}, got: {context.response}")
+    print(f"Good similarity = {context.response_similarity}")
 
 
 @then("the response should not be similar to")
@@ -51,7 +51,7 @@ def check_not_similar(context):
         c = row["Bad Response"]
         c_embedding = embedder.embed_documents([c])
         c_similarity = cosine_similarity(context.response_embedding, c_embedding)[0][0]
-        print(f"Bad comparison: {c}, similarity = {c_similarity}", file=sys.stderr)
+        print(f"Bad comparison: {c}, similarity = {c_similarity}")
         assert (
             c_similarity < context.response_similarity
         ), f"'{context.response} is similar to {c}'. Similarity = {c_similarity}"

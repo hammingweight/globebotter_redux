@@ -3,7 +3,7 @@ from langchain_ollama import ChatOllama
 from .settings import LLM_MODEL
 
 
-chat_model = ChatOllama(model=LLM_MODEL, num_thread=4, temperature=0.1)
+chat_model = ChatOllama(model=LLM_MODEL, temperature=0.1)
 
 
 def cleanup_response(response: str):
