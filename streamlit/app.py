@@ -1,13 +1,15 @@
 import uuid
 
+# Hack 1 to suppress a warning (we don't actually need this import)
+import torch
+
+import streamlit as st
 from langchain_core.messages import HumanMessage
 
-# Hack to suppress a warning (we don't actually need this import here)
-import torch
-torch.classes.__path__ = []
-import streamlit as st
-
 from globebotter.rag import chatbot
+
+# Hack 2 to stop streamlit from emitting a meaningless warning.
+torch.classes.__path__ = []
 
 st.set_page_config(page_title="GlobeBotter", page_icon="🌐")
 st.header("🌐 Welcome to GlobeBotter!")
