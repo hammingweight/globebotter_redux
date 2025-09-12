@@ -1,6 +1,10 @@
 import uuid
 
 from langchain_core.messages import HumanMessage
+
+# Hack to suppress a warning (we don't actually need this import here)
+import torch
+torch.classes.__path__ = []
 import streamlit as st
 
 from globebotter.rag import chatbot
