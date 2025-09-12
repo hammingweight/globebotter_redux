@@ -1,3 +1,4 @@
+import logging
 import random
 
 from behave import use_step_matcher, given, when, then
@@ -8,6 +9,9 @@ from globebotter.rag import chatbot
 from globebotter.settings import LLM_MODEL
 
 use_step_matcher("re")
+
+
+logger = logging.getLogger(__name__)
 
 
 @given("a session with the chatbot")
@@ -23,7 +27,7 @@ def ask_chatbot(context, query):
         query = context.text.strip(" '\"")
 
     assert query != "", "No question asked"
-    print(f"Query: {query}\n\n")
+    logger.info(f"Query: {query}\n\n")
     response = context.chatbot.invoke(
         {"messages": query}, config={"configurable": {"thread_id": context.session}}
     )
@@ -39,8 +43,8 @@ def check_similar(context, expected):
     context.response_similarity = cosine_similarity(
         context.response_embedding, context.expected_embedding
     )[0][0]
-    print(f"Expected: {expected}, got: {context.response}")
-    print(f"Good similarity = {context.response_similarity}")
+    logger.info(f"Expected: {expected}, got: {context.response}")
+    logger.info(f"Good similarity = {context.response_similarity}")
 
 
 @then("the response should not be similar to")
@@ -50,7 +54,7 @@ def check_not_similar(context):
         c = row["Bad Response"]
         c_embedding = embedder.embed_documents([c])
         c_similarity = cosine_similarity(context.response_embedding, c_embedding)[0][0]
-        print(f"Bad comparison: {c}, similarity = {c_similarity}")
+        logger.info(f"Bad comparison: {c}, similarity = {c_similarity}")
         assert (
             c_similarity < context.response_similarity
         ), f"'{context.response} is similar to {c}'. Similarity = {c_similarity}"
