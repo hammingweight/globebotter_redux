@@ -49,3 +49,12 @@ Feature: Chatbot knowledge
       | Bad Response                                                                     | Reason               |
       | Sfogliatella, Babà, Pastiera Napoletana, Struffoli                               | Neapolitan desserts  |
       | Spaghetti Cacio e Pepe, Spaghetti alla Carbonara, Abbachio, Carciofi alla Giudea | Roman food           |
+
+  @irrelevant
+  Scenario: Question unrelated to Italy
+    Given a session with the chatbot
+    When a user asks the chatbot "What is the square root of 10?"
+    Then the response should be similar to "The question is about mathematics. I am unable to assist.""
+    And the response should not be similar to
+      | Bad Response                                  | Reason              |
+      | The square root of 10 is approximately 3.162. | Irrelevant to Italy |

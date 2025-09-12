@@ -1,4 +1,4 @@
-from typing import Annotated, List
+from typing import Annotated, List, Literal
 from typing_extensions import TypedDict
 
 from langchain_core.documents import Document
@@ -13,9 +13,48 @@ from .retriever import HYBRID_RETRIEVER
 
 class State(TypedDict):
     question: str
+    is_question_relevant: bool
     context: List[Document]
     answer: str
     messages: Annotated[list, add_messages]
+
+
+def check_relevancy(state: State):
+    system_prompt = (
+        "You are an assistant that checks that a user is asking for help about Italy."
+        " You should check that questions are about travel destinations including "
+        "towns, tourist sights, regional food, hotels, etc. "
+        "If a question is about Italy, simply reply 'RELEVANT' without any further detail."
+        "If a question is not about Italy, reply 'IRRELEVANT:' followed by your reasoning "
+        "and a statement that you cannot assist with the question."
+    )
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", system_prompt),
+            ("placeholder", "{history}"),
+            ("human", "{question}"),
+        ]
+    )
+    messages = prompt.invoke(
+        {
+            "question": state["messages"][-1].content,
+            "history": state["messages"][:-1],
+        }
+    )
+    response = chat_model.invoke(messages).content
+    response = cleanup_response(response)
+    print(response)
+    if "IRRELEVANT:" in response:
+        reason_index = response.index("IRRELEVANT:") + len("IRRELEVANT:")
+        reason = response[reason_index:].strip()
+        return {"is_question_relevant": False, "messages": [AIMessage(reason)]}
+    return {"is_question_relevant": True}
+
+
+def is_relevant_condition(state: State) -> Literal["retrieve", END]:
+    if state["is_question_relevant"]:
+        return "retrieve"
+    return END
 
 
 def retrieve(state: State):
@@ -61,10 +100,13 @@ def generate(state: State):
 
 
 graph_builder = StateGraph(State)
+graph_builder.add_node("check_relevancy", check_relevancy)
 graph_builder.add_node("retrieve", retrieve)
 graph_builder.add_node("generate", generate)
 
-graph_builder.add_edge(START, "retrieve")
+graph_builder.add_edge(START, "check_relevancy")
+graph_builder.add_conditional_edges("check_relevancy", is_relevant_condition)
+# graph_builder.add_edge("check_relevancy", "retrieve")
 graph_builder.add_edge("retrieve", "generate")
 graph_builder.add_edge("generate", END)
 

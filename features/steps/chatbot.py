@@ -1,5 +1,4 @@
 import random
-import sys
 
 from behave import use_step_matcher, given, when, then
 from langchain_community.utils.math import cosine_similarity
@@ -17,7 +16,7 @@ def start_session(context):
     context.session = str(random.randint(1, 1000000))
 
 
-@when('a user asks the chatbot(?P<query>.*)')
+@when("a user asks the chatbot(?P<query>.*)")
 def ask_chatbot(context, query):
     query = query.strip(" '\"")
     if query == "":
