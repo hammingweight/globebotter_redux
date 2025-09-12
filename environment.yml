@@ -165,7 +165,7 @@ dependencies:
       - jupyterlab-widgets==3.0.15
       - keyring==25.6.0
       - kubernetes==33.1.0
-      - langchain==0.3.17
+      - langchain==0.3.27
       - langchain-anthropic==0.3.5
       - langchain-chroma==0.2.5
       - langchain-community==0.3.16
@@ -178,12 +178,12 @@ dependencies:
       - langchain-mistralai==0.2.6
       - langchain-ollama==0.2.3
       - langchain-openai==0.3.19
-      - langchain-text-splitters==0.3.5
+      - langchain-text-splitters==0.3.11
       - langgraph==0.3.34
       - langgraph-checkpoint==2.1.1
       - langgraph-prebuilt==0.1.8
       - langgraph-sdk==0.1.74
-      - langsmith==0.4.27
+      - langsmith==0.3.45
       - lark==1.2.2
       - lxml==6.0.0
       - markdown-it-py==4.0.0
