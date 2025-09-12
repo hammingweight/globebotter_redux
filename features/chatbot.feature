@@ -15,7 +15,7 @@ Feature: Chatbot knowledge
       | 1. Pane e Salame. 2. Tonnarello 3. Cantina e Cucina | These are restaurants, not sights   |
       | All mimsy were the borogoves                        | Nonsense                            |
 
-    When a user asks the chatbot "Is the Asinelli tower in Rome? Your answer should be at most ten words."
+    When a user asks the chatbot "Is the Asinelli tower in that city? Your answer should be at most ten words."
     Then the response should be similar to "No, the Asinelli Tower is in Bologna."
     And the response should not be similar to
       | Bad Response                      | Reason      |
