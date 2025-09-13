@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 @given("a session with the chatbot")
 def start_session(context):
     context.chatbot = chatbot
+    context.session = str(random.randint(1, 1000000))
 
 
 @when("a user asks the chatbot(?P<query>.*)")
@@ -27,7 +28,9 @@ def ask_chatbot(context, query):
 
     assert query != "", "No question asked"
     logger.info(f"Query: {query}\n\n")
-    response = context.chatbot.invoke({"messages": query}})
+    response = context.chatbot.invoke(
+        {"messages": query}, config={"configurable": {"thread_id": context.session}}
+    )
     context.response = response["messages"][-1].content
     embedder = OllamaEmbeddings(model=LLM_MODEL)
     context.response_embedding = embedder.embed_documents([context.response])
