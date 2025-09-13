@@ -42,6 +42,7 @@ dependencies:
       - annotated-types==0.7.0
       - anyio==4.10.0
       - arxiv==2.1.3
+      - asttokens==3.0.0
       - attrs==25.3.0
       - backoff==2.2.1
       - bcrypt==4.3.0
@@ -60,10 +61,12 @@ dependencies:
       - cucumber-tag-expressions==6.2.0
       - dataclasses-json==0.6.7
       - datasets==3.4.0
+      - decorator==5.2.1
       - dill==0.3.8
       - distro==1.9.0
       - docarray==0.41.0
       - durationpy==0.10
+      - executing==2.2.1
       - feedparser==6.0.12
       - filelock==3.19.1
       - flake8==7.3.0
@@ -87,6 +90,9 @@ dependencies:
       - idna==3.10
       - importlib-metadata==8.7.0
       - importlib-resources==6.5.2
+      - ipython==9.5.0
+      - ipython-pygments-lexers==1.1.1
+      - jedi==0.19.2
       - jinja2==3.1.6
       - jsonpatch==1.33
       - jsonpointer==3.0.0
@@ -108,6 +114,7 @@ dependencies:
       - markdown-it-py==4.0.0
       - markupsafe==3.0.2
       - marshmallow==3.26.1
+      - matplotlib-inline==0.1.7
       - mccabe==0.7.0
       - mdurl==0.1.2
       - mmh3==5.2.0
@@ -134,12 +141,17 @@ dependencies:
       - pandas==2.3.2
       - parse==1.20.2
       - parse-type==0.6.6
+      - parso==0.8.5
       - pathspec==0.12.1
+      - pexpect==4.9.0
       - pillow==10.4.0
       - platformdirs==4.4.0
       - posthog==5.4.0
+      - prompt-toolkit==3.0.52
       - propcache==0.3.2
       - protobuf==5.29.5
+      - ptyprocess==0.7.0
+      - pure-eval==0.2.3
       - pyarrow==21.0.0
       - pyasn1==0.6.1
       - pyasn1-modules==0.4.2
@@ -173,6 +185,7 @@ dependencies:
       - smmap==5.0.2
       - sniffio==1.3.1
       - sqlalchemy==2.0.43
+      - stack-data==0.6.3
       - streamlit==1.37.1
       - sympy==1.14.0
       - tenacity==8.5.0
@@ -180,6 +193,7 @@ dependencies:
       - toml==0.10.2
       - tornado==6.5.2
       - tqdm==4.67.1
+      - traitlets==5.14.3
       - typer==0.17.4
       - types-requests==2.32.4.20250913
       - typing-extensions==4.15.0
@@ -191,6 +205,7 @@ dependencies:
       - uvloop==0.21.0
       - watchdog==4.0.2
       - watchfiles==1.1.0
+      - wcwidth==0.2.13
       - websocket-client==1.8.0
       - websockets==15.0.1
       - xxhash==3.5.0
