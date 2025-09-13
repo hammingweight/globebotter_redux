@@ -28,8 +28,10 @@ def ask_chatbot(context, query):
 
     assert query != "", "No question asked"
     logger.info(f"Query: {query}\n\n")
+    # Set the LLM temperature to 0 to improve reliability and reproducibility.
     response = context.chatbot.invoke(
-        {"messages": query}, config={"configurable": {"thread_id": context.session}}
+        {"messages": query},
+        config={"configurable": {"thread_id": context.session, "temperature": 0.0}},
     )
     context.response = response["messages"][-1].content
     embedder = OllamaEmbeddings(model=LLM_MODEL)
