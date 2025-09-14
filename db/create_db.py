@@ -16,7 +16,7 @@ if not os.path.exists("italy_guide.pdf"):
 
 loader = PyPDFLoader("./italy_guide.pdf")
 documents = loader.load()
-embedder = OllamaEmbeddings(model=LLM_MODEL)
+embedder = OllamaEmbeddings(model=LLM_MODEL, temperature=0.0)
 text_splitter = SemanticChunker(embeddings=embedder, add_start_index=True)
 documents = text_splitter.split_documents(documents)
 

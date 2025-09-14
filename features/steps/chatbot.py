@@ -14,6 +14,9 @@ use_step_matcher("re")
 
 logger = logging.getLogger(__name__)
 
+# Use a low temperature to improve answer reliability and to make the tests more deterministic.
+LLM_TEMPERATURE = 0.0
+
 
 @given("a session with the chatbot")
 def start_session(context):
@@ -30,7 +33,7 @@ def ask_chatbot(context, query):
     assert query != "", "No question asked"
     logger.info(f"Query: {query}\n\n")
     response = context.chatbot.invoke(
-        {"messages": query, "llm_temperature": 0.0},
+        {"messages": query, "llm_temperature": LLM_TEMPERATURE},
         config={"configurable": {"thread_id": context.session}},
     )
     context.response = response["messages"][-1].content
@@ -40,7 +43,7 @@ def ask_chatbot(context, query):
 
 @then('the response should be similar to "(?P<expected>.*)"')
 def check_similar(context, expected):
-    embedder = OllamaEmbeddings(model=LLM_MODEL)
+    embedder = OllamaEmbeddings(model=LLM_MODEL, temperature=LLM_TEMPERATURE)
     context.expected_embedding = embedder.embed_documents([expected])
     context.response_similarity = cosine_similarity(
         context.response_embedding, context.expected_embedding

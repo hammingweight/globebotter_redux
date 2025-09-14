@@ -30,11 +30,11 @@ Feature: Chatbot knowledge
     List five towns in Tuscany as a numbered list. Do not include any details about the towns.
     Do not explain your reasoning for the selection of towns.
     """
-    Then the response should be similar to "1. Florence  2. Pisa  3. Siena  4. Lucca  5. San Gimignano"
+    Then the response should be similar to "1. Florence  2. Siena  3. Pisa  4 San Gimignano  5. Lucca"
     And the response should not be similar to
-      | Bad Response                                           | Reason                               |
-      | 1. Florence  2. Pisa  3. Siena  4. Naples  5. Verona   | Naples and Verona are not in Tuscany |
-      | Florence, Pisa, Siena, Lucca, San Gimignano            | Not a numbered list                  |
+      | Bad Response                                                    | Reason                               |
+      | 1. Florence  2. Siena  3. Naples  4. San Gimignano  5. Verona   | Naples and Verona are not in Tuscany |
+      | Florence, Siena, Pisa, San Gimignano, Lucca                     | Not a numbered list                  |
 
   @food
   Scenario: Test food knowledge
