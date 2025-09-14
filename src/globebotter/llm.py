@@ -1,9 +1,14 @@
 from langchain_ollama import ChatOllama
 
-from .settings import LLM_MODEL
+LLM_MODEL = "qwen3:4b-q4_K_M"
+
+_chat_models = {}
 
 
-chat_model = ChatOllama(model=LLM_MODEL, temperature=0.1)
+def get_llm(temperature):
+    if _chat_models.get(temperature) is None:
+        _chat_models[temperature] = ChatOllama(model=LLM_MODEL, temperature=temperature)
+    return _chat_models[temperature]
 
 
 def cleanup_response(response: str):

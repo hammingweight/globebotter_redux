@@ -6,7 +6,7 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_chroma import Chroma
 from langchain_experimental.text_splitter import SemanticChunker
 
-from globebotter.settings import LLM_MODEL
+from globebotter.llm import LLM_MODEL
 
 
 if not os.path.exists("italy_guide.pdf"):

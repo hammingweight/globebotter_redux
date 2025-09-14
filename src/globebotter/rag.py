@@ -7,11 +7,12 @@ from langchain_core.prompts import ChatPromptTemplate
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import add_messages, END, START, StateGraph
 
-from .llm import chat_model, cleanup_response
+from .llm import cleanup_response, get_llm
 from .retriever import HYBRID_RETRIEVER
 
 
 class State(TypedDict):
+    llm_temperature: float
     question: str
     is_question_relevant: bool
     context: List[Document]
@@ -41,7 +42,8 @@ def check_relevancy(state: State):
             "history": state["messages"][:-1],
         }
     )
-    response = chat_model.invoke(messages).content
+    llm = get_llm(state.get("llm_temperature", 0.3))
+    response = llm.invoke(messages).content
     response = cleanup_response(response)
     if "IRRELEVANT:" in response:
         reason_index = response.index("IRRELEVANT:") + len("IRRELEVANT:")
@@ -93,7 +95,8 @@ def generate(state: State):
             "context": docs_content,
         }
     )
-    response = chat_model.invoke(messages).content
+    llm = get_llm(state.get("llm_temperature", 0.3))
+    response = llm.invoke(messages).content
     response = cleanup_response(response)
     return {"answer": response, "messages": [AIMessage(response)]}
 

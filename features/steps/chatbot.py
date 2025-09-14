@@ -5,8 +5,9 @@ from behave import use_step_matcher, given, when, then
 from langchain_community.utils.math import cosine_similarity
 from langchain_ollama.embeddings import OllamaEmbeddings
 
+from globebotter.llm import LLM_MODEL
 from globebotter.rag import chatbot
-from globebotter.settings import LLM_MODEL
+
 
 use_step_matcher("re")
 
@@ -29,7 +30,8 @@ def ask_chatbot(context, query):
     assert query != "", "No question asked"
     logger.info(f"Query: {query}\n\n")
     response = context.chatbot.invoke(
-        {"messages": query}, config={"configurable": {"thread_id": context.session}}
+        {"messages": query, "llm_temperature": 0.0},
+        config={"configurable": {"thread_id": context.session}},
     )
     context.response = response["messages"][-1].content
     embedder = OllamaEmbeddings(model=LLM_MODEL)
