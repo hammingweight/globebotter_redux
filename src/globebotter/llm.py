@@ -1,6 +1,6 @@
 from langchain_ollama import ChatOllama
 
-LLM_MODEL = "qwen3:4b-q4_K_M"
+LLM_MODEL = "qwen3:8b-q4_K_M"
 
 _chat_models = {}
 

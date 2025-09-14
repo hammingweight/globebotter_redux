@@ -11,6 +11,7 @@ docarray==0.41.0
 langchain-text-splitters==0.3.11
 langsmith==0.3.45
 langgraph==0.3.34
+pypdf==6.0.0
 ruff==0.9.4
 streamlit==1.37.1
 langchain-ollama==0.2.3
