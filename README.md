@@ -51,7 +51,7 @@ So we should also add sanity checks that the LLM is returning answers that are m
 The [chatbot.feature](./features/chatbot.feature) file contains all the tests.
 
 ## Is this BDD Testing Useful?
-Probably.
+While BDD tests alone aren't enough, they're probably useful.
 
 When tuning a RAG application, it's useful to be able to run automated tests to check whether the LLM is returning plausible answers. Parameters that can be tuned are:
  * Document chunking strategies (fixed-size, recursive-character, sematic-chunking, etc.)
