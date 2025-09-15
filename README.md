@@ -53,8 +53,8 @@ The [chatbot.feature](./features/chatbot.feature) file contains all the tests.
 ## Is this BDD Testing Useful?
 While BDD tests alone aren't enough, they're probably useful.
 
-When tuning a RAG application, it's useful to be able to run automated tests to check whether the LLM is returning plausible answers. Parameters that can be tuned are:
- * Document chunking strategies (fixed-size, recursive-character, sematic-chunking, etc.)
+When tuning a RAG application, it's convenient to run automated tests to check whether the LLM is returning plausible answers. Parameters that can be tuned are:
+ * Document chunking strategies (fixed-size, recursive-character, semantic chunking, etc.)
  * Advanced RAG techniques (hubrid retrieval, contextual compression, etc.)
  * Choice of LLM (Mistral, Qwen, Deepseek, etc.)
 
