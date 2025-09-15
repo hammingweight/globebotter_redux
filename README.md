@@ -48,6 +48,8 @@ The result of this reasoning is that this chatbot is exercised with BDD tests li
       | 1. Pane e Salame. 2. Tonnarello 3. Cantina e Cucina | These are restaurants, not sights   |
 ```
 
+The [chatbot.feature](./features/chatbot.feature) file contains all the tests.
+
 
 ## Prerequisites for Running/Testing the Application
 To run this code, you'll need
@@ -86,7 +88,7 @@ ollama pull qwen3:4b-q4_K_M
 ```
 
 ## Running the Chatbot
-The `GlobeBotter Redux` application is a streamlit app; to run it
+The `GlobeBotter Redux` chatbot is a streamlit application; to run it
 
 ```
 PYTHONPATH=src streamlit run streamlit/app.py
@@ -96,10 +98,7 @@ The chatbot is then available at [http://localhost:8501](http://localhost:8501)
 
 
 ## Running the Behavior Tests
-The behavior ("BDD") [tests](./features/chatbot.feature) use the `behave` library to test various scenarios. The tests ask the chatbot questions and
-check that the chatbot's answer is more `similar` to some expected answer than to some incorrect answers. For more details about how the similarity measures and the tests, read the [README](./features/README.md) in the [features directory](./features/).
-
-To run the tests
+The tests are run using Python `behave`; to run the tests
 
 ```
 PYTHONPATH=src behave
@@ -113,16 +112,3 @@ If the tests all pass, you should see output similar to
 19 steps passed, 0 failed, 0 skipped
 Took 28min 48.755s
 ```
-
-https://isiflorence.org/wp-content/uploads/2022/02/MINI-TRAVEL-GUIDE.pdf
-
-    Then the response should be similar to "Arancini, Pasta alla Norma, Cannoli, Caponata." # features/steps/chatbot.py:35
-Expected: Arancini, Pasta alla Norma, Cannoli, Caponata., got: Couscous alla Trapanese, Caponata, Arancine, Pasta alla norma.
-Good similarity = 0.9685369844915186
-    And the response should not be similar to                                               # features/steps/chatbot.py:46
-      | Bad Response                                                                     | Reason              |
-      | Sfogliatella, Babà, Pastiera Napoletana, Struffoli                               | Neapolitan desserts |
-      | Spaghetti Cacio e Pepe, Spaghetti alla Carbonara, Abbachio, Carciofi alla Giudea | Roman food          |
-Bad similarity = 0.6420451365733053
-Bad similarity = 0.6923445125793662
-

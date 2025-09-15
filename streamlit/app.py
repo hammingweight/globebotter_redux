@@ -5,9 +5,13 @@ from langchain_core.messages import HumanMessage
 from globebotter.rag import chatbot
 
 st.set_page_config(page_title="GlobeBotter Redux", page_icon="🇮🇹")
-st.markdown("<h2 style='text-align: center;'>Welcome to GlobeBotter Redux!</h2>", unsafe_allow_html=True)
 st.markdown(
-    "<center><h4>An AI Chatbot for Italian Travel 🇮🇹</h4></center>", unsafe_allow_html=True
+    "<h2 style='text-align: center;'>Welcome to GlobeBotter Redux!</h2>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<center><h4>An AI Chatbot for Italian Travel 🇮🇹</h4></center>",
+    unsafe_allow_html=True,
 )
 message = """
 __This chatbot was inspired by Valentina Alto's fun

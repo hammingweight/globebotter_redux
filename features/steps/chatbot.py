@@ -50,6 +50,14 @@ def check_similar(context, expected):
     )[0][0]
     logger.info(f"Expected: {expected}, got: {context.response}")
     logger.info(f"Good similarity = {context.response_similarity}")
+    assert (
+        context.response_similarity >= context.minimum_good_similarity
+    ), f"""
+    '{context.response}'
+    is not similar to
+    '{expected}'.
+    Cosine similarity={context.response_similarity} (< {context.minimum_good_similarity})
+    """
 
 
 @then("the response should not be similar to")
@@ -60,6 +68,7 @@ def check_not_similar(context):
         c_embedding = embedder.embed_documents([c])
         c_similarity = cosine_similarity(context.response_embedding, c_embedding)[0][0]
         logger.info(f"Bad comparison: {c}, similarity = {c_similarity}")
+        # Not similar means that the similarity is less than the good similarity.
         assert (
             c_similarity < context.response_similarity
         ), f"'{context.response} is similar to {c}'. Similarity = {c_similarity}"
