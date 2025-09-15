@@ -27,12 +27,13 @@ conda activate globebotter
 ```
 
 ### Installing Ollama
-To install [Ollama](https://ollama.com/download/linux) and the Qwen3-4B LLM (with 4-bit quantization)
+`GlobeBotter Redux` runs on the Qwen3 LLM with 4 billion parameters (and 4-bit quantization) using Ollama.
+To install [Ollama](https://ollama.com/download/linux) and the Qwen3-4B LLM
 
 ```
 curl -fsSL https://ollama.com/install.sh | sh
-ollama pull qwen3:4b-q4_K_M
 ollama serve 
+ollama pull qwen3:4b-q4_K_M
 ```
 
 https://isiflorence.org/wp-content/uploads/2022/02/MINI-TRAVEL-GUIDE.pdf
