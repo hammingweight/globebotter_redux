@@ -59,6 +59,10 @@ PYTHONPATH=src behave
 If the tests all pass, you should see output similar to
 
 ```
+1 feature passed, 0 failed, 0 skipped
+4 scenarios passed, 0 failed, 0 skipped
+19 steps passed, 0 failed, 0 skipped
+Took 28min 48.755s
 ```
 
 https://isiflorence.org/wp-content/uploads/2022/02/MINI-TRAVEL-GUIDE.pdf
