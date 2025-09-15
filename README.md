@@ -1,4 +1,5 @@
 # GlobeBotter Redux: BDD Testing an LLM Chatbot
+<img src="/images/globebotter_redux.png"> align="right" width="300px">
 
 ## Prerequisites
 To run this code, you'll need
