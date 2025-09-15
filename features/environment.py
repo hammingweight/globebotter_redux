@@ -11,4 +11,6 @@ def before_all(context):
     context.logger = logging.getLogger("behave_logger")
     # If the cosine similarity between the actual and expected responses
     # is less than this value, a test will fail. This value can be overridden
-    context.minimum_good_similarity = 0.7
+    # with a step like
+    # 'Given the minimum good cosine similarity should be at least 0.7'
+    context.minimum_good_similarity = 0.5

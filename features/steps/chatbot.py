@@ -1,7 +1,7 @@
 import logging
 import random
 
-from behave import use_step_matcher, given, when, then
+from behave import use_step_matcher, given, step, when, then
 from langchain_community.utils.math import cosine_similarity
 from langchain_ollama.embeddings import OllamaEmbeddings
 
@@ -16,6 +16,11 @@ logger = logging.getLogger(__name__)
 
 # Use a low temperature to improve answer reliability and to make the tests more deterministic.
 LLM_TEMPERATURE = 0.0
+
+
+@step("the minimum good cosine similarity should be at least (?P<value>.*)")
+def set_minimum_good_cosine_similarity(context, value):
+    context.minimum_good_similarity = float(value)
 
 
 @given("a session with the chatbot")

@@ -1,5 +1,11 @@
 Feature: Chatbot knowledge
 
+  # This background step isn't necessary but it illustrates how to set
+  # the minuminum cosine similarity for an expected value to match
+  # the actual value.
+  Background: Set minimum cosine similarity
+    Given the minimum good cosine similarity should be at least 0.7
+
   @sights
   Scenario: Test tourist sights knowledge
     Given a session with the chatbot
