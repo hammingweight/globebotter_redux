@@ -33,7 +33,7 @@ If the LLM is returning sensible answers we would expect the answer to be more s
 a list of three tourist sights in Paris. The vector embedding of three tourist sights in Paris would encode the facts (1) that there are three entities and (2) that
 the entities are popular with tourists but it would encode "Paris" rather than "Rome". Similarly, the vector embedding of three Roman restaurants would encode (1) that there are three entities and (2) that the entities are in Rome but would not embed the meaning of "tourist sight" in the vector.
 
-The result of this reasoning is that this chatbot is exercised with BDD tests like
+So we should also add sanity checks that the LLM is returning answers that are more similar to correct answers than wrong ones, like 
 
 ```gherkin
   When a user asks the chatbot
@@ -50,6 +50,17 @@ The result of this reasoning is that this chatbot is exercised with BDD tests li
 
 The [chatbot.feature](./features/chatbot.feature) file contains all the tests.
 
+## Is this BDD Testing Useful?
+Probably.
+
+When tuning a RAG application, it's useful to be able to run automated tests to check whether the LLM is returning plausible answers. Parameters that can be tuned are:
+ * Document chunking strategies (fixed-size, recursive-character, sematic-chunking, etc.)
+ * Advanced RAG techniques (hubrid retrieval, contextual compression, etc.)
+ * Choice of LLM (Mistral, Qwen, Deepseek, etc.)
+
+Interestingly, I could not get all the tests to pass when using Mistral with 7B parameters while Qwen3 with 4B parameters passes. Mistral-7B uses 4096-dimensional vector embeddings while Qwen3-4B uses 2560-dimensional vectors. An examination of the document snippets retrieved by Mistral showed that they were frequently irrelevant and that the poornperformance might have been due to the [curse of dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality).
+
+Contextual compression significantly slowed down the application but was not necessary to get the tests to pass. 
 
 ## Prerequisites for Running/Testing the Application
 To run this code, you'll need
