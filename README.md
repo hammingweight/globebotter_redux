@@ -1,6 +1,22 @@
 # GlobeBotter Redux: BDD Testing an LLM Chatbot
 <img src="/images/globebotter_redux.png" align="right" width="400px">
 
+In 2023, Valentina Alto in her book ["Building LLM Powered Applications"](https://www.packtpub.com/en-us/product/building-llm-powered-applications-9781835462638) wrote a fun LangChain chatbot, *GlobeBotter*, to help plan a travel intinerary. The source code is on [GitHub](https://github.com/PacktPublishing/Building-LLM-Powered-Applications/blob/main/Chapter%206%20-%20Building%20conversational%20apps.ipynb). The application demonstrated a few things:
+ * Retrieval Augmented Generation (RAG)
+ * Integrating a tool (Google search) with LangChain
+ * Vector Databases (FAISS) for similarity search
+ * Using a cloud-hosted LLM (OpenAI)
+
+ In 2023, [LangChain](https://www.langchain.com/) provided opinionated components. However, since 2023, opinions on best practices have changed and LangChain
+ has deprecated much of their earlier code. Instead, LangChain now provides AI primitives that developers wire together using *LangGraph* to create applications.
+ 
+ Revisiting *GlobeBotter* seemed like a good way to learn about:
+  * Writing a chatbot using the LangGraph idioms
+  * Using a local LLM (Qwen3)
+  * Switching from FAISS to [ChromaDB](https://www.trychroma.com/)
+  * **Writing BDD tests to evaluate a chatbot**
+
+
 ## Prerequisites
 To run this code, you'll need
  * Python 3.11
