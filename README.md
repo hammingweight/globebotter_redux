@@ -26,6 +26,15 @@ conda env create
 conda activate globebotter
 ```
 
+### Installing Ollama
+To install [Ollama](https://ollama.com/download/linux) and the Qwen3-4B LLM (with 4-bit quantization)
+
+```
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull qwen3:4b-q4_K_M
+ollama serve 
+```
+
 https://isiflorence.org/wp-content/uploads/2022/02/MINI-TRAVEL-GUIDE.pdf
 
     Then the response should be similar to "Arancini, Pasta alla Norma, Cannoli, Caponata." # features/steps/chatbot.py:35
