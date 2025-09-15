@@ -1,4 +1,4 @@
-# GlobeBotter Redux
+# GlobeBotter Redux: BDD Testing an LLM Chatbot
 
 ## Prerequisites
 To run this code, you'll need
@@ -34,6 +34,31 @@ To install [Ollama](https://ollama.com/download/linux) and the Qwen3-4B LLM
 curl -fsSL https://ollama.com/install.sh | sh
 ollama serve 
 ollama pull qwen3:4b-q4_K_M
+```
+
+## Running the Chatbot
+The `GlobeBotter Redux` application is a streamlit app; to run it
+
+```
+PYTHONPATH=src streamlit run streamlit/app.py
+```
+
+The chatbot is then available at [http://localhost:8501](http://localhost:8501)
+
+
+## Running the Behavior Tests
+The behavior ("BDD") [tests](./features/chatbot.feature) use the `behave` library to test various scenarios. The tests ask the chatbot questions and
+check that the chatbot's answer is more `similar` to some expected answer than to some incorrect answers. For more details about how the similarity measures and the tests, read the [README](./features/README.md) in the [features directory](./features/).
+
+To run the tests
+
+```
+PYTHONPATH=src behave
+```
+
+If the tests all pass, you should see output similar to
+
+```
 ```
 
 https://isiflorence.org/wp-content/uploads/2022/02/MINI-TRAVEL-GUIDE.pdf
