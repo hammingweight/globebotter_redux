@@ -20,7 +20,9 @@ LLM_TEMPERATURE = 0.0
 
 @step("the minimum good cosine similarity should be at least (?P<value>.*)")
 def set_minimum_good_cosine_similarity(context, value):
-    context.minimum_good_similarity = float(value)
+    value = float(value)
+    assert value <= 1.0 and value >= -1.0, "cosine similarity must be in the range [-1.0, +1.0]"
+    context.minimum_good_similarity = value
 
 
 @given("a session with the chatbot")

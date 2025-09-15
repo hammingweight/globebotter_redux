@@ -6,6 +6,7 @@ Feature: Chatbot knowledge
   Background: Set minimum cosine similarity
     Given the minimum good cosine similarity should be at least 0.7
 
+
   @sights
   Scenario: Test tourist sights knowledge
     Given a session with the chatbot
