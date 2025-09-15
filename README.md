@@ -17,7 +17,39 @@ In 2023, Valentina Alto in her book ["Building LLM Powered Applications"](https:
   * **Writing BDD tests to evaluate a chatbot**
 
 
-## Prerequisites
+## Testing LLM Applications
+One of the challenges with writing LLM applications is testing them. One popular approach is to have a more powerful LLM evaluate the answers of a less
+powerful LLM. That's not always possible or cost-effective if you're running an LLM locally. 
+
+This repository explores the idea of testing whether
+the response from an LLM application is *similar* to a reasonable (expected) answer. *Vector embeddings* are a fundamental concept in LLMs where text is converted into
+a numerical vector of a large dimension (e.g. 2560 or 4096 dimensions) where the embedding captures the meaning and relationship of the text. If we
+have two embeddings we can measure how similar the embeddings are by considering the euclidean distance or the (cosine of the) angle between the vectors.
+For example, if the angle between the vectors is close to zero, then the cosine similarity will be close to 1.
+
+If we asked a chatbot to suggest three sights that we should visit in Rome, we might expect that it would respond with something like "1. The Colosseum 2. Vatican City 3. Trevi Fountain". Realistically, we're not going to get precisely that answer and we might instead get "1. Colosseum and Roman Forum 2. Pantheon 3. Castel Sant'Angelo" since those are also sensible recommendations. The cosine similarity isn't going to be precisely 1 and we can't even realistically guess whether we should expect the similarity to be above, say, 0.7 or 0.8.
+
+If the LLM is returning sensible answers we would expect the answer to be more similar to "1. Colosseum and Roman Forum 2. Pantheon 3. Castel Sant'Angelo" than to
+a list of three tourist sights in Paris. The vector embedding of three tourist sights in Paris would encode the facts (1) that there are three entities and (2) that
+the entities are popular with tourists but it would encode "Paris" rather than "Rome". Similarly, the vector embedding of three Roman restaurants would encode (1) that there are three entities and (2) that the entities are in Rome but would not embed the meaning of "tourist sight" in the vector.
+
+The result of this reasoning is that this chatbot is exercised with BDD tests like
+
+```gherkin
+  When a user asks the chatbot
+    """
+    I'm in Rome for one day. Suggest three sights, in numbered bullet form, that I should visit.
+    Do not include any details about the sights.
+    """
+    Then the response should be similar to "1. The Colosseum 2. Vatican City 3. Trevi Fountain"
+    And the response should not be similar to
+      | Bad Response                                        | Reason                              |
+      | 1. The Louvre 2. Eiffel Tower 3. Arc de Triomphe    | These are sights in Paris, not Rome |
+      | 1. Pane e Salame. 2. Tonnarello 3. Cantina e Cucina | These are restaurants, not sights   |
+```
+
+
+## Prerequisites for Running/Testing the Application
 To run this code, you'll need
  * Python 3.11
  * Ollama
