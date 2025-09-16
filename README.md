@@ -51,9 +51,9 @@ So we should also add sanity checks that the LLM is returning answers that are m
 The [chatbot.feature](./features/chatbot.feature) file contains all the tests.
 
 ## Is this BDD Testing Useful?
-While BDD tests alone aren't enough, they're probably useful.
+Probably.
 
-When tuning a RAG application, it's convenient to run automated tests to check whether the LLM is returning plausible answers. Parameters that can be tuned are:
+When tuning a RAG application, it's convenient to run automated tests to check whether the LLM is returning sane answers. Parameters that can be tuned are:
  * Document chunking strategies (fixed-size, recursive-character, semantic chunking, etc.)
  * Advanced RAG techniques (hubrid retrieval, contextual compression, etc.)
  * Choice of LLM (Mistral, Qwen, Deepseek, etc.)
@@ -61,6 +61,9 @@ When tuning a RAG application, it's convenient to run automated tests to check w
 Interestingly, I could not get all the tests to pass when using Mistral with 7B parameters while Qwen3 with 4B parameters passes. Mistral-7B uses 4096-dimensional vector embeddings while Qwen3-4B uses 2560-dimensional vectors. An examination of the document snippets retrieved by Mistral showed that they were frequently irrelevant and that the poornperformance might have been due to the [curse of dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality).
 
 Contextual compression significantly slowed down the application but was not necessary to get the tests to pass. 
+
+BDD tests like this alone aren't sufficient to evaluate a RAG application but it's convenient to be able to run sanity checks while tuning a model.
+
 
 ## Prerequisites for Running/Testing the Application
 To run this code, you'll need
