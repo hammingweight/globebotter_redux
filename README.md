@@ -62,7 +62,7 @@ Interestingly, I could not get all the tests to pass when using Mistral with 7B 
 
 Contextual compression significantly slowed down the application but was not necessary to get the tests to pass. 
 
-BDD tests like this alone aren't sufficient to evaluate a RAG application but it's convenient to be able to run sanity checks while tuning a model.
+BDD tests like this aren't sufficient to evaluate a RAG application but it's convenient to be able to run sanity checks while tuning a model.
 
 
 ## Prerequisites for Running/Testing the Application
