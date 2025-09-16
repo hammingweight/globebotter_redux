@@ -16,6 +16,10 @@ In 2023, [Valentina Alto](https://github.com/valentina-alto) in her book ["Build
   * Switching from FAISS to [ChromaDB](https://www.trychroma.com/)
   * **Writing BDD tests to evaluate a chatbot**
 
+## The `GlobeBotter Redux` Application
+`GlobeBotter Redux` is a chatbot that answers questions about Italy, its culture, its cuisine, sights to see and things to do. The chatbot uses RAG to supplement
+the parametric knowledge of the LLM. The RAG information is obtained from a [mini travel guide](https://isiflorence.org/wp-content/uploads/2022/02/MINI-TRAVEL-GUIDE.pdf)
+that was chunked and stored in a Chroma vector database.
 
 ## Testing LLM Applications
 One of the challenges with LLM applications is testing them. One popular approach is to have a more powerful LLM evaluate the answers of a less
