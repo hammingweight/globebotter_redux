@@ -24,12 +24,12 @@ powerful LLM. That's not always possible or cost-effective if you're running an 
 This repository explores the idea of testing whether
 the response from an LLM application is *similar* to a reasonable (expected) answer. *Vector embeddings* are a fundamental concept in LLMs where text is converted into
 a numerical vector of a large dimension (e.g. 2560 or 4096 dimensions) where the embedding captures the meaning and relationship of the text. If we
-have two embeddings we can measure how similar the embeddings are by considering the euclidean distance or the (cosine of the) angle between the vectors.
+have two embeddings, we can measure how similar the embeddings are by considering the euclidean distance or the cosine of the angle between the vectors.
 For example, if the angle between the vectors is close to zero, then the cosine similarity will be close to 1.
 
-If we asked a chatbot to suggest three sights that we should visit in Rome, we might expect that it would respond with something like "1. The Colosseum 2. Vatican City 3. Trevi Fountain". Realistically, we're not going to get precisely that answer and we might instead get "1. Colosseum and Roman Forum 2. Pantheon 3. Castel Sant'Angelo". The cosine similarity between our expected and actual answers isn't going to be precisely 1. We can't even realistically guess whether we should expect the similarity to be above, say, 0.7 or 0.8.
+If we asked a chatbot to suggest three sights that we should visit in Rome, we might expect that it would respond with something like "1. The Colosseum 2. Vatican City 3. Trevi Fountain". Realistically, we're not going to get precisely that answer and we might instead get "1. Colosseum and Roman Forum 2. Pantheon 3. Castel Sant'Angelo". The cosine similarity between our expected and actual answers isn't going to be precisely 1. We can't even realistically guess whether we should expect the similarity to be above, say, 0.7 or 0.8. However we would expect an answer that is subtly wrong to be further away from the expected answer. 
 
-While we can't necessarily set a hard lower bound for a similarity threshold, we can check that the expected and actual answers are more similar than slightly wrong answers. If the LLM is returning sensible answers we would expect the answer to be more similar to "1. Colosseum and Roman Forum 2. Pantheon 3. Castel Sant'Angelo" than to
+If the LLM is returning sensible answers we would expect the answer to be more similar to "1. Colosseum and Roman Forum 2. Pantheon 3. Castel Sant'Angelo" than to
 a list of three tourist sights in Paris. The vector embedding of three tourist sights in Paris would encode the facts (1) that there are three entities and (2) that
 the entities are popular with tourists but it would encode "Paris" rather than "Rome". Similarly, the vector embedding of three Roman restaurants would encode (1) that there are three entities and (2) that the entities are in Rome but would not embed the meaning of "tourist sight" in the vector.
 
@@ -51,7 +51,7 @@ So we should also add sanity checks that the LLM is returning answers that are m
 The [chatbot.feature](./features/chatbot.feature) file contains all the tests.
 
 ## Is this BDD Testing Useful?
-Probably.
+Initially, I could not get the BDD tests to reliably pass and needed to tune the application. 
 
 When tuning a RAG application, it's convenient to run automated tests to check whether the LLM is returning sane answers. Parameters that can be tuned are:
  * Document chunking strategies (fixed-size, recursive-character, semantic chunking, etc.)
