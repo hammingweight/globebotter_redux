@@ -1,7 +1,8 @@
 # The Vector Database
-This directory contains a ChromaDB database that is populated with document snippets from an Italian travel guide that
-can be downloaded from [ISI Florence](https://isiflorence.org/wp-content/uploads/2022/02/MINI-TRAVEL-GUIDE.pdf). If you
-want to create the database from, download the travel guide and save it in this directory as `italy_guide.pdf`. Then
+This directory contains a ChromaDB database that is populated with document snippets from an Italian travel guide. You
+can download the travel guide from [ISI Florence](https://isiflorence.org/wp-content/uploads/2022/02/MINI-TRAVEL-GUIDE.pdf).
+
+If you want to create the database from scratch, download the travel guide and save it in this directory as `italy_guide.pdf`. Then
 run
 
 ```
