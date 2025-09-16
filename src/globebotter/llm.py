@@ -1,5 +1,6 @@
 from langchain_ollama import ChatOllama
 
+# Qwen3, 4 billion parameters, 4-bit quantization
 LLM_MODEL = "qwen3:4b-q4_K_M"
 
 _chat_models = {}
