@@ -20,6 +20,7 @@ class State(TypedDict):
     messages: Annotated[list, add_messages]
 
 
+# A step that rejects questions that are unrelated to Italy travel.
 def check_relevancy(state: State):
     system_prompt = (
         "You are an assistant that checks that a user is asking for help about Italy."
@@ -52,17 +53,20 @@ def check_relevancy(state: State):
     return {"is_question_relevant": True}
 
 
+# If the question is irrelevant, just go to the final state.
 def is_relevant_condition(state: State) -> Literal["retrieve", END]:
     if state["is_question_relevant"]:
         return "retrieve"
     return END
 
 
+# Get relevant document steps
 def retrieve(state: State):
     retrieved_docs = HYBRID_RETRIEVER.invoke(state["messages"][-1].content)
     return {"context": retrieved_docs}
 
 
+# Generate a reply based on the "RAG" document snippets.
 def generate(state: State):
     system_prompt = (
         "You are a helpful assistant that helps a user visiting Italy. You should "
