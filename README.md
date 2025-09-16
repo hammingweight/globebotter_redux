@@ -1,7 +1,7 @@
 # GlobeBotter Redux: BDD Testing an LLM Chatbot
 <img src="/images/globebotter_redux.png" align="right" width="400px">
 
-In 2023, Valentina Alto in her book ["Building LLM Powered Applications"](https://www.packtpub.com/en-us/product/building-llm-powered-applications-9781835462638) wrote a fun LangChain chatbot, *GlobeBotter*, to help plan a travel intinerary. The source code is on [GitHub](https://github.com/PacktPublishing/Building-LLM-Powered-Applications/blob/main/Chapter%206%20-%20Building%20conversational%20apps.ipynb). The application demonstrated a few concepts:
+In 2023, [Valentina Alto](https://github.com/valentina-alto) in her book ["Building LLM Powered Applications"](https://www.packtpub.com/en-us/product/building-llm-powered-applications-9781835462638) wrote a fun LangChain chatbot, *GlobeBotter*, to help plan a travel intinerary. The source code is on [GitHub](https://github.com/PacktPublishing/Building-LLM-Powered-Applications/blob/main/Chapter%206%20-%20Building%20conversational%20apps.ipynb). The application demonstrated a few concepts:
  * Retrieval Augmented Generation (RAG)
  * Integrating a tool (Google search) with LangChain
  * Vector Databases (FAISS) for similarity search
