@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 LLM_TEMPERATURE = 0.0
 
 
+# A step that allows the user to set a minimum expected cosine similarity for an answer to be
+# accepted as "similar".
 @step("the minimum good cosine similarity should be at least (?P<value>.*)")
 def set_minimum_good_cosine_similarity(context, value):
     value = float(value)
@@ -75,7 +77,7 @@ def check_not_similar(context):
         c_embedding = embedder.embed_documents([c])
         c_similarity = cosine_similarity(context.response_embedding, c_embedding)[0][0]
         logger.info(f"Bad comparison: {c}, similarity = {c_similarity}")
-        # Not similar means that the similarity is less than the good similarity.
+        # "Not similar" means that the similarity is less than the good similarity.
         assert (
             c_similarity < context.response_similarity
         ), f"'{context.response} is similar to {c}'. Similarity = {c_similarity}"
