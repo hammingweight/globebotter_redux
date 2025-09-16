@@ -18,7 +18,7 @@ In 2023, Valentina Alto in her book ["Building LLM Powered Applications"](https:
 
 
 ## Testing LLM Applications
-One of the challenges with writing LLM applications is testing them. One popular approach is to have a more powerful LLM evaluate the answers of a less
+One of the challenges with LLM applications is testing them. One popular approach is to have a more powerful LLM evaluate the answers of a less
 powerful LLM. That's not always possible or cost-effective if you're running an LLM locally. 
 
 This repository explores the idea of testing whether
