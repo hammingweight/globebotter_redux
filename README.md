@@ -1,7 +1,7 @@
 # GlobeBotter Redux: BDD Testing an LLM Chatbot
 <img src="/images/globebotter_redux.png" align="right" width="400px">
 
-In 2023, Valentina Alto in her book ["Building LLM Powered Applications"](https://www.packtpub.com/en-us/product/building-llm-powered-applications-9781835462638) wrote a fun LangChain chatbot, *GlobeBotter*, to help plan a travel intinerary. The source code is on [GitHub](https://github.com/PacktPublishing/Building-LLM-Powered-Applications/blob/main/Chapter%206%20-%20Building%20conversational%20apps.ipynb). The application demonstrated a few things:
+In 2023, Valentina Alto in her book ["Building LLM Powered Applications"](https://www.packtpub.com/en-us/product/building-llm-powered-applications-9781835462638) wrote a fun LangChain chatbot, *GlobeBotter*, to help plan a travel intinerary. The source code is on [GitHub](https://github.com/PacktPublishing/Building-LLM-Powered-Applications/blob/main/Chapter%206%20-%20Building%20conversational%20apps.ipynb). The application demonstrated a few concepts:
  * Retrieval Augmented Generation (RAG)
  * Integrating a tool (Google search) with LangChain
  * Vector Databases (FAISS) for similarity search
@@ -23,7 +23,7 @@ powerful LLM. That's not always possible or cost-effective if you're running an 
 
 This repository explores the idea of testing whether
 the response from an LLM application is *similar* to a reasonable (expected) answer. *Vector embeddings* are a fundamental concept in LLMs where text is converted into
-a numerical vector of a large dimension (e.g. 2560 or 4096 dimensions) where the embedding captures the meaning and relationship of the text. If we
+a numerical vector of a large dimension (e.g. 2560 or 4096 dimensions). The embedding captures the meaning and relationship of the text. If we
 have two embeddings, we can measure how similar the embeddings are by considering the euclidean distance or the cosine of the angle between the vectors.
 For example, if the angle between the vectors is close to zero, then the cosine similarity will be close to 1.
 
@@ -51,18 +51,16 @@ So we should also add sanity checks that the LLM is returning answers that are m
 The [chatbot.feature](./features/chatbot.feature) file contains all the tests.
 
 ## Is this BDD Testing Useful?
-Initially, I could not get the BDD tests to reliably pass and needed to tune the application. 
-
-When tuning a RAG application, it's convenient to run automated tests to check whether the LLM is returning sane answers. Parameters that can be tuned are:
+Initially, I could not get the BDD tests to pass reliably; I needed to tune the application. Parameters that can be tuned are:
  * Document chunking strategies (fixed-size, recursive-character, semantic chunking, etc.)
  * Advanced RAG techniques (hubrid retrieval, contextual compression, etc.)
  * Choice of LLM (Mistral, Qwen, Deepseek, etc.)
 
-Interestingly, I could not get all the tests to pass when using Mistral with 7B parameters while Qwen3 with 4B parameters passes. Mistral-7B uses 4096-dimensional vector embeddings while Qwen3-4B uses 2560-dimensional vectors. An examination of the document snippets retrieved by Mistral showed that they were frequently irrelevant and that the poornperformance might have been due to the [curse of dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality).
+Interestingly, I never managed to get all the tests to pass when using Mistral with 7B parameters while I could get the tests to pass when I changed the LLM to Qwen3 with 4B parameters. Mistral-7B uses 4096-dimensional vector embeddings while Qwen3-4B uses 2560-dimensional vectors. An examination of the document snippets retrieved by Mistral showed that they were frequently irrelevant and that the poor performance might have been due to the [curse of dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality).
 
 Contextual compression significantly slowed down the application but was not necessary to get the tests to pass. 
 
-BDD tests like this aren't sufficient to evaluate a RAG application but it's convenient to be able to run sanity checks while tuning a model.
+BDD tests like this aren't sufficient to evaluate a RAG application but BDD tests are useful for sanity checking the application when tuning it.
 
 
 ## Prerequisites for Running/Testing the Application
