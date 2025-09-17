@@ -19,3 +19,4 @@ def before_all(context):
     context.minimum_good_similarity = 0.5
 
     context.llm_model = os.environ.get("LLM_MODEL", LLM_MODEL)
+    logging.info(f"Running tests using LLM = {context.llm_model}")
