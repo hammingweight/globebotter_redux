@@ -129,8 +129,10 @@ If the tests all pass, you should see output similar to
 Took 28min 48.755s
 ```
 
-If you want to use a different (possibly more powerful) LLM to evaluate the expected versus actual test responses, you can pass the name of
-a model via the `LLM_MODEL` environment variable
+By default, the BDD tests use the same LLM as the chatbot (Qwen3-4B) to check that the expected and actual responses are similar.  That might introduce coupling between
+the chatbot's behavior and the tests. If you want to use a different (possibly more powerful) LLM to evaluate the expected versus actual test responses, you can pass the name
+of a different model via the `LLM_MODEL` environment variable. For example, if you want to use Mistral-7B to check that the chatbot is returning sensible results, you
+can run the tests like
 
 ```bash
 ollama pull mistral:7b-instruct-q4_K_M 
