@@ -75,20 +75,20 @@ To run this code, you'll need
 ### Installing Python Dependencies
 You can install the dependencies using either a `virtualenv` or, if you're on Linux, using Anaconda. But, first, check out this repository
 
-```
+```bash
 git clone https://github.com/hammingweight/globebotter_redux.git
 cd globebotter_redux
 ```
 
 #### Using a virtualenv
-```
+```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt 
 ```
 
 #### Using Anaconda
-```
+```bash
 conda env create
 conda activate globebotter
 ```
@@ -97,7 +97,7 @@ conda activate globebotter
 `GlobeBotter Redux` runs on the Qwen3 LLM with 4 billion parameters (and 4-bit quantization) using Ollama.
 To install [Ollama](https://ollama.com/download/linux) and the Qwen3-4B LLM
 
-```
+```bash
 curl -fsSL https://ollama.com/install.sh | sh
 ollama serve 
 ollama pull qwen3:4b-q4_K_M
@@ -106,7 +106,7 @@ ollama pull qwen3:4b-q4_K_M
 ## Running the Chatbot
 The `GlobeBotter Redux` chatbot is a streamlit application; to run it
 
-```
+```bash
 PYTHONPATH=src streamlit run streamlit/app.py
 ```
 
@@ -116,7 +116,7 @@ The chatbot is then available at [http://localhost:8501](http://localhost:8501)
 ## Running the Behavior Tests
 The tests are run using Python `behave`; to run the tests
 
-```
+```bash
 PYTHONPATH=src behave
 ```
 
@@ -132,6 +132,7 @@ Took 28min 48.755s
 If you want to use a different (possibly more powerful) LLM to evaluate the expected versus actual test responses, you can pass the name of
 a model via the `LLM_MODEL` environment variable
 
-```
+```bash
+ollama pull mistral:7b-instruct-q4_K_M 
 LLM_MODEL="mistral:7b-instruct-q4_K_M" PYTHONPATH=src behave
 ```
