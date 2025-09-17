@@ -24,12 +24,11 @@ for doc in doc_strings:
 class VectorDbRetriever(BaseRetriever):
 
     def _get_relevant_documents(self, query, *, run_manager) -> List[Document]:
-        return vector_db.max_marginal_relevance_search(query=query, k=4, fetch_k=10)
+        return vector_db.similarity_search(query=query, k=8)
 
 
 VECTOR_DB_RETRIEVER = VectorDbRetriever()
 
 BM25_RETRIEVER = BM25Retriever.from_documents(documents)
-BM25_RETRIEVER.k = 4
 
 HYBRID_RETRIEVER = EnsembleRetriever(retrievers=[VECTOR_DB_RETRIEVER, BM25_RETRIEVER])
