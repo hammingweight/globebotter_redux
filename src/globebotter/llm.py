@@ -6,10 +6,14 @@ LLM_MODEL = "qwen3:4b-q4_K_M"
 _chat_models = {}
 
 
-def get_llm(temperature):
-    if _chat_models.get(temperature) is None:
-        _chat_models[temperature] = ChatOllama(model=LLM_MODEL, temperature=temperature)
-    return _chat_models[temperature]
+def get_llm(temperature, model=None):
+    if model is None:
+        model = LLM_MODEL
+    if _chat_models.get((temperature, model)) is None:
+        _chat_models[(temperature, model)] = ChatOllama(
+            model=model, temperature=temperature
+        )
+    return _chat_models[(temperature, model)]
 
 
 def cleanup_response(response: str):

@@ -128,3 +128,10 @@ If the tests all pass, you should see output similar to
 19 steps passed, 0 failed, 0 skipped
 Took 28min 48.755s
 ```
+
+If you want to use a different (possibly more powerful) LLM to evaluate the expected versus actual test responses, you can pass the name of
+a model via the `LLM_MODEL` environment variable
+
+```
+LLM_MODEL="mistral:7b-instruct-q4_K_M" PYTHONPATH=src behave
+```

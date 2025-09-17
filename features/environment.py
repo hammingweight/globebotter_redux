@@ -1,4 +1,7 @@
 import logging
+import os
+
+from globebotter.llm import LLM_MODEL
 
 
 def before_all(context):
@@ -14,3 +17,5 @@ def before_all(context):
     # with a step like
     # 'Given the minimum good cosine similarity should be at least 0.7'
     context.minimum_good_similarity = 0.5
+
+    context.llm_model = os.environ.get("LLM_MODEL", LLM_MODEL)

@@ -5,7 +5,6 @@ from behave import use_step_matcher, given, step, when, then
 from langchain_community.utils.math import cosine_similarity
 from langchain_ollama.embeddings import OllamaEmbeddings
 
-from globebotter.llm import LLM_MODEL
 from globebotter.rag import chatbot
 
 
@@ -23,7 +22,9 @@ LLM_TEMPERATURE = 0.0
 @step("the minimum good cosine similarity should be at least (?P<value>.*)")
 def set_minimum_good_cosine_similarity(context, value):
     value = float(value)
-    assert value <= 1.0 and value >= -1.0, "cosine similarity must be in the range [-1.0, +1.0]"
+    assert (
+        value <= 1.0 and value >= -1.0
+    ), "cosine similarity must be in the range [-1.0, +1.0]"
     context.minimum_good_similarity = value
 
 
@@ -46,13 +47,13 @@ def ask_chatbot(context, query):
         config={"configurable": {"thread_id": context.session}},
     )
     context.response = response["messages"][-1].content
-    embedder = OllamaEmbeddings(model=LLM_MODEL)
+    embedder = OllamaEmbeddings(model=context.llm_model)
     context.response_embedding = embedder.embed_documents([context.response])
 
 
 @then('the response should be similar to "(?P<expected>.*)"')
 def check_similar(context, expected):
-    embedder = OllamaEmbeddings(model=LLM_MODEL, temperature=LLM_TEMPERATURE)
+    embedder = OllamaEmbeddings(model=context.llm_model, temperature=LLM_TEMPERATURE)
     context.expected_embedding = embedder.embed_documents([expected])
     context.response_similarity = cosine_similarity(
         context.response_embedding, context.expected_embedding
@@ -71,7 +72,7 @@ def check_similar(context, expected):
 
 @then("the response should not be similar to")
 def check_not_similar(context):
-    embedder = OllamaEmbeddings(model=LLM_MODEL)
+    embedder = OllamaEmbeddings(model=context.llm_model)
     for row in context.table:
         c = row["Bad Response"]
         c_embedding = embedder.embed_documents([c])
