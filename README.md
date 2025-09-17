@@ -103,15 +103,6 @@ ollama serve
 ollama pull qwen3:4b-q4_K_M
 ```
 
-## Running the Chatbot
-The `GlobeBotter Redux` chatbot is a streamlit application; to run it
-
-```bash
-PYTHONPATH=src streamlit run streamlit/app.py
-```
-
-The chatbot is then available at [http://localhost:8501](http://localhost:8501)
-
 
 ## Running the Behavior Tests
 The tests are run using Python `behave`; to run the tests
@@ -138,3 +129,13 @@ can run the tests like
 ollama pull mistral:7b-instruct-q4_K_M 
 LLM_MODEL="mistral:7b-instruct-q4_K_M" PYTHONPATH=src behave
 ```
+
+## Running the Chatbot
+The `GlobeBotter Redux` chatbot is a streamlit application; to run it
+
+```bash
+PYTHONPATH=src streamlit run streamlit/app.py
+```
+
+The chatbot is then available at [http://localhost:8501](http://localhost:8501)
+
