@@ -1,5 +1,4 @@
-import logging
-import random
+import uuid
 
 from behave import use_step_matcher, given, step, when, then
 from langchain_community.utils.math import cosine_similarity
@@ -11,8 +10,6 @@ from globebotter.rag import chatbot
 
 use_step_matcher("re")
 
-
-logger = logging.getLogger(__name__)
 
 # Use a low temperature to improve answer reliability and to make the tests more deterministic.
 LLM_TEMPERATURE = 0.0
@@ -37,7 +34,7 @@ def set_minimum_good_cosine_similarity(context, value):
 @given("a session with the chatbot")
 def start_session(context):
     context.chatbot = chatbot
-    context.session = str(random.randint(1, 1000000))
+    context.session = str(uuid.uuid4())
 
 
 @when("a user asks the chatbot(?P<query>.*)")
@@ -47,7 +44,6 @@ def ask_chatbot(context, query):
         query = context.text.strip(" '\"")
 
     assert query != "", "No question asked"
-    logger.info(f"Query: {query}\n\n")
     response = context.chatbot.invoke(
         {"messages": query, "llm_temperature": LLM_TEMPERATURE},
         config={"configurable": {"thread_id": context.session}},
@@ -64,8 +60,9 @@ def check_similar(context, expected):
     context.response_similarity = cosine_similarity(
         context.response_embedding, context.expected_embedding
     )[0][0]
-    logger.info(f"Expected: {expected}, got: {context.response}")
-    logger.info(f"Good similarity = {context.response_similarity}")
+    context.logger.info(f"Expected: {expected}")
+    context.logger.info(f"Actual: {context.response}")
+    context.logger.info(f"Good similarity: {context.response_similarity}")
     assert (
         context.response_similarity >= context.minimum_good_similarity
     ), f"""
@@ -83,7 +80,8 @@ def check_not_similar(context):
         c = row["Bad Response"]
         c_embedding = embedder.embed_documents([c])
         c_similarity = cosine_similarity(context.response_embedding, c_embedding)[0][0]
-        logger.info(f"Bad comparison: {c}, similarity = {c_similarity}")
+        context.logger.info(f"Bad comparison: {c}")
+        context.logger.info(f"Bad similarity: {c_similarity}")
         # "Not similar" means that the similarity is less than the good similarity.
         assert (
             c_similarity < context.response_similarity
