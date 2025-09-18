@@ -37,7 +37,7 @@ If the LLM is returning sensible answers we would expect the answer to be more s
 a list of three tourist sights in Paris. The vector embedding of three tourist sights in Paris would encode the facts (1) that there are three entities and (2) that
 the entities are popular with tourists but it would encode "Paris" rather than "Rome". Similarly, the vector embedding of three Roman restaurants would encode (1) that there are three entities and (2) that the entities are in Rome but would not embed the meaning of "tourist sight" in the vector.
 
-So we should also add sanity checks that the LLM is returning answers that are more similar to correct answers than wrong ones, like 
+So we should also add sanity checks that the LLM is returning an answer that is more similar to a correct answer than to wrong ones. For example, 
 
 ```gherkin
   When a user asks the chatbot
