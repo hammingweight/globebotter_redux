@@ -1,7 +1,7 @@
 Feature: Chatbot knowledge
 
   @sights
-  Scenario: Test tourist sights knowledge
+  Scenario: Test knowledge of Rome
     Given a session with the chatbot
     When a user asks the chatbot
     """
@@ -22,11 +22,13 @@ Feature: Chatbot knowledge
       | Yes                               | 100% wrong  |
       | No, the Asinelli Tower is in Pisa | Wrong tower |
 
+  @sights
+  Scenario: Test knowledge of Verona
     Given a session with the chatbot
     When a user asks the chatbot
     """
     Provide a bullet list of four tourist attractions in Verona. No point should be longer than five words.
-    """"
+    """
     Then the response should be similar to "* The Roman Amphitheater  * Juliet's balcony  * San Zeno Maggiore  * Piazza delle Erbe"
     And the response should not be similar to
       | Bad Response                                                                     | Reason             |
@@ -64,8 +66,9 @@ Feature: Chatbot knowledge
   @irrelevant
   Scenario: Question unrelated to Italy
     Given a session with the chatbot
+    And the similarity should be at least 0.7
     When a user asks the chatbot "What is the square root of 10?"
-    Then the response should be similar to "The question is about mathematics and is unrelated to Italy. I am unable to assist.""
+    Then the response should be similar to "The question is about mathematics and is unrelated to Italy. I cannot assist.""
     And the response should not be similar to
       | Bad Response                                  | Reason              |
       | The square root of 10 is approximately 3.162. | Irrelevant to Italy |

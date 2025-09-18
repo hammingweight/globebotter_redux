@@ -5,6 +5,7 @@ from behave import use_step_matcher, given, step, when, then
 from langchain_community.utils.math import cosine_similarity
 from langchain_ollama.embeddings import OllamaEmbeddings
 
+from globebotter.llm import LLM_MODEL
 from globebotter.rag import chatbot
 
 
@@ -19,12 +20,17 @@ LLM_TEMPERATURE = 0.0
 
 # A step that allows the user to set a minimum expected cosine similarity for an answer to be
 # accepted as "similar".
-@step("the minimum good cosine similarity should be at least (?P<value>.*)")
+@step("the similarity should be at least (?P<value>.*)")
 def set_minimum_good_cosine_similarity(context, value):
     value = float(value)
     assert (
         value <= 1.0 and value >= -1.0
     ), "cosine similarity must be in the range [-1.0, +1.0]"
+    if context.llm_model != LLM_MODEL:
+        # Some models have very high-dimensional embeddings which
+        # makes similarity measures less meaningful.
+        # The LLM_MODEL uses only 2560-dimension embeddings.
+        value -= 0.2
     context.minimum_good_similarity = value
 
 
