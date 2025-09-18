@@ -19,7 +19,7 @@ Bad similarity: 0.7160645870564805
 
 ```
 
-The logs include expected versus actual answers and the similarity measure. In the log above, we can see that the similarity between the expected answer 
+The logs include expected versus actual answers and the similarity measure. In the log above, we can see that the similarity between the expected answer
 and the actual answer is 0.880. The similarity between an obviously wrong answer (tourist sights in France, not Rome) and the actual answer is also quite high
 (0.846). Nevertheless, the actual answer is closer to a correct answer than an incorrect answer.
 
