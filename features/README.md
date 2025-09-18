@@ -26,7 +26,7 @@ and the actual answer is 0.880. The similarity between an obviously wrong answer
 The similarity measures are also sensitive to the LLM used to calculate the embedding vectors. For example, for these tests a good answer will typically
 have a similarity above 0.8 when using the Qwen3-4B embeddings but is typically a little above 0.6 when using the Mistral-7B embeddings.
 
-It's possible to explicitly set a minimum value that for the similarity for a test to pass
+It's possible to explicitly set a minimum similarity value for a test to pass
 
 ```
 Given a session with the chatbot
