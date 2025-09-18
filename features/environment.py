@@ -18,14 +18,6 @@ def before_all(context):
 
 def before_scenario(context, scenario):
     context.logger.info(f">>> {scenario.name}")
-    # If the cosine similarity between the actual and expected responses
-    # is less than this value, a test will fail. This value can be overridden
-    # with a step like
-    # 'Given the similarity should be at least 0.7'
-    if context.llm_model == LLM_MODEL:
-        context.minimum_good_similarity = 0.8
-    else:
-        context.minimum_good_similarity = 0.5
 
 
 def after_scenario(context, scenario):

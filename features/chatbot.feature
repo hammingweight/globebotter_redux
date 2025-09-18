@@ -66,9 +66,9 @@ Feature: Chatbot knowledge
   @irrelevant
   Scenario: Question unrelated to Italy
     Given a session with the chatbot
-    And the similarity should be at least 0.7
     When a user asks the chatbot "What is the square root of 10?"
-    Then the response should be similar to "The question is about mathematics and is unrelated to Italy. I cannot assist.""
+    Then the response should be similar to "The question is about mathematics and is unrelated to Italy. I cannot assist."
+    And the similarity should be at least 0.85
     And the response should not be similar to
       | Bad Response                                  | Reason              |
       | The square root of 10 is approximately 3.162. | Irrelevant to Italy |
