@@ -57,7 +57,7 @@ The [chatbot.feature](./features/chatbot.feature) file contains all the tests.
 ## Is this BDD Testing Useful?
 Initially, I could not get the BDD tests to pass reliably; I needed to tune the application. Parameters that can be tuned are:
  * Document chunking strategies (fixed-size, recursive-character, semantic chunking, etc.)
- * Advanced RAG techniques (hubrid retrieval, contextual compression, etc.)
+ * Advanced RAG techniques (hybrid retrieval, contextual compression, etc.)
  * Choice of LLM (Mistral, Qwen, Deepseek, etc.)
 
 Interestingly, I never managed to get all the tests to pass when using Mistral with 7B parameters while I could get the tests to pass when I changed the LLM to Qwen3 with 4B parameters. Mistral-7B uses 4096-dimensional vector embeddings while Qwen3-4B uses 2560-dimensional vectors. An examination of the document snippets retrieved by Mistral showed that they were frequently irrelevant and that the poor performance might have been due to the [curse of dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality).
