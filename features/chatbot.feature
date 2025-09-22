@@ -1,4 +1,4 @@
-Feature: Chatbot knowledge
+Feature: Chatbot behavior
 
   @sights
   Scenario: Test knowledge of Rome

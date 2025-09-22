@@ -18,6 +18,7 @@ def before_all(context):
 
 def before_scenario(context, scenario):
     context.logger.info(f">>> {scenario.name}")
+    context.response_similarity = 0.0
 
 
 def after_scenario(context, scenario):

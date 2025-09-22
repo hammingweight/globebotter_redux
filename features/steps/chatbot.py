@@ -9,7 +9,6 @@ from globebotter.rag import chatbot
 
 use_step_matcher("re")
 
-
 # Use a low temperature to improve answer reliability and to make the tests more deterministic.
 LLM_TEMPERATURE = 0.0
 
@@ -59,12 +58,14 @@ def check_similar(context, expected):
     embedder = OllamaEmbeddings(model=context.llm_model, temperature=LLM_TEMPERATURE)
     context.expected = expected
     context.expected_embedding = embedder.embed_documents([expected])
-    context.response_similarity = cosine_similarity(
+    response_similarity = cosine_similarity(
         context.response_embedding, context.expected_embedding
     )[0][0]
+    if response_similarity > context.response_similarity:
+        context.response_similarity = response_similarity
     context.logger.info(f"Expected: {expected}")
     context.logger.info(f"Actual: {context.response}")
-    context.logger.info(f"Good similarity: {context.response_similarity}")
+    context.logger.info(f"Good similarity: {response_similarity}")
 
 
 @then("the response should not be similar to")
