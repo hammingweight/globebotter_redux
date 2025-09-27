@@ -98,7 +98,7 @@ conda activate globebotter
 To install [Ollama](https://ollama.com/download/linux) and the Qwen3-4B LLM
 
 ```bash
-curl -fsSL https://ollama.com/install.sh | sh
+curl -fsSL https://ollama.com/install.sh | OLLAMA_VERSION=0.11.4 sh
 ollama serve 
 ollama pull qwen3:4b-q4_K_M
 ```
