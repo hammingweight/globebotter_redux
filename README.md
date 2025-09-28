@@ -115,9 +115,9 @@ If the tests all pass, you should see output similar to
 
 ```
 1 feature passed, 0 failed, 0 skipped
-4 scenarios passed, 0 failed, 0 skipped
-19 steps passed, 0 failed, 0 skipped
-Took 28min 48.755s
+5 scenarios passed, 0 failed, 0 skipped
+24 steps passed, 0 failed, 0 skipped
+Took 2min 44.323s
 ```
 
 By default, the BDD tests use the same LLM as the chatbot (Qwen3-4B) to check that the expected and actual responses are similar.  That might introduce coupling between
