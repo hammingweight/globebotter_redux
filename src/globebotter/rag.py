@@ -112,7 +112,6 @@ graph_builder.add_node("generate", generate)
 
 graph_builder.add_edge(START, "check_relevancy")
 graph_builder.add_conditional_edges("check_relevancy", is_relevant_condition)
-# graph_builder.add_edge("check_relevancy", "retrieve")
 graph_builder.add_edge("retrieve", "generate")
 graph_builder.add_edge("generate", END)
 
